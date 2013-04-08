@@ -8,14 +8,14 @@
         <version>7</version>
     </parent>
   
-    <groupId>ch.simas.sqlresultmapper</groupId>
-    <artifactId>sqlresultmapper</artifactId>
+    <groupId>ch.simas.qlrm</groupId>
+    <artifactId>qlrm</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>sqlresultmapper</name>
-    <description>SQL Result Mapper</description>
-    <url>https://github.com/simasch/sqlresultmapper</url>
+    <description>QLRM - Query Langugage Result Mapper</description>
+    <url>https://github.com/simasch/qlrm</url>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -81,8 +81,8 @@
     </repositories>
     
     <scm>
-        <connection>scm:git:git@github.com:simasch/sqlresultmapper.git</connection>
-        <developerConnection>scm:git:git@github.com:simasch/sqlresultmapper.git</developerConnection>
-        <url>git@github.com:simasch/sqlresultmapper.git</url>        
+        <connection>scm:git:git@github.com:simasch/qlrm.git</connection>
+        <developerConnection>scm:git:git@github.com:simasch/qlrm.git</developerConnection>
+        <url>git@github.com:simasch/qlrm.git</url>        
     </scm>
 </project>
