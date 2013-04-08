@@ -1,5 +1,5 @@
-# SQL Result Mapper
-In JPA there is no Constructor Expression for native SQL queries. SQL Result Mapper fills the gap!
+# QLRM - Query Language Result Mapper
+In JPA there is no Constructor Expression for native SQL queries. QLRM fills the gap!
 
 And because the implementation was quite easy there is an implentation for JDBC as well.
 
@@ -32,7 +32,7 @@ Usage is quit forward but be aware of:
     Assert.assertTrue(ok);
 
 ##References
-The SQL Result Mapper is inspired by EclipseLink and Hibernate:
+The QL Result Mapper is inspired by EclipseLink and Hibernate:
 - http://onpersistence.blogspot.ch/2010/07/eclipselink-jpa-native-constructor.html
 - http://docs.jboss.org/hibernate/orm/3.3/reference/en/html/querysql.html#d0e13904
 
