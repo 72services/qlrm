@@ -13,7 +13,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>sqlresultmapper</name>
+    <name>QLRM</name>
     <description>QLRM - Query Langugage Result Mapper</description>
     <url>https://github.com/simasch/qlrm</url>
     <licenses>
