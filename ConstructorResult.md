@@ -19,5 +19,6 @@ Example:
             @ColumnResult(name="avgOrder", type=Double.class)})
     })
 
-The problem with that approach is, that an explicit mapping is necessary.
-With QLRM this is much simpler.
+## Why QLRM is better?
+The problem with that approach is, that you must declare the mapping of the fields in the constructor.
+With QLRM this is not necessary!
