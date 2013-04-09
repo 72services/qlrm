@@ -3,6 +3,15 @@ In JPA there is no Constructor Expression for native SQL queries. QLRM fills the
 
 And because the implementation was quite easy there is an implentation for JDBC as well.
 
+##Maven Dependency
+QLRM is available in Maven Central
+
+    <dependency>
+      <groupId>ch.simas.qlrm</groupId>
+      <artifactId>qlrm</artifactId>
+      <version>1.0</version>
+    </dependency>
+
 ##Usage
 Usage is quit forward but be aware of:
 - The Constructor must have the same number of arguments as the result of the SQL query
