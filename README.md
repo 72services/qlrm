@@ -62,5 +62,4 @@ Then a database connection must be passed. And the last parameter is a vargargs 
 SQL Result Mapper is open source and free software under Apache License, Version 2:
 
 http://www.apache.org/licenses/LICENSE-2.0.html
-
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/dc83e9cee6047650f8676400eff0d1ce "githalytics.com")](http://githalytics.com/simasch/qlrm)
