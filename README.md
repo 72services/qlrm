@@ -1,7 +1,10 @@
 # QLRM - Query Language Result Mapper
 In JPA there is no Constructor Expression for native SQL queries. QLRM fills the gap!
 
-And because the implementation was quite easy there is an implentation for JDBC as well.
+And because the implementation was quite easy there is an implentation for JDBC resultsets as well.
+
+### But what about JPA 2.1 and the ConstructorResult?
+Read more: https://github.com/simasch/qlrm/blob/master/ConstructorResult.md
 
 ##Maven Dependency
 QLRM is available in Maven Central
