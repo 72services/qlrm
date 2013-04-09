@@ -34,3 +34,4 @@ With QLRM this is not necessary.
     List<EmployeeTO> list = JpaSqlResultMapper.list(q, om.acme.CustomerDetails.class);
    
 EmployeeTO does not have to be mapped!
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/dc83e9cee6047650f8676400eff0d1ce "githalytics.com")](http://githalytics.com/simasch/qlrm)
