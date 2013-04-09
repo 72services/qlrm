@@ -1,7 +1,8 @@
 # What about JPA 2.1 Constructor Result?
 With JPA 2.1 there will be the ConstructorResult annotation.
 
-Example:
+Example from the specification:
+
     Query q = em.createNativeQuery(
       "SELECT c.id, c.name, COUNT(o) as orderCount, AVG(o.price) AS avgOrder " +
       "FROM Customer c, Orders o " +
