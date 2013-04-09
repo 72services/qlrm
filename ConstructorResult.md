@@ -23,7 +23,7 @@ Example:
 The problem with that approach is, that you must declare the mapping of the fields in the constructor.
 With QLRM this is not necessary.
 
-   Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE");
-   List<EmployeeTO> list = JpaSqlResultMapper.list(q, EmployeeTO.class);
+    Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE");
+    List<EmployeeTO> list = JpaSqlResultMapper.list(q, EmployeeTO.class);
    
 EmployeeTO does not have to be mapped!
