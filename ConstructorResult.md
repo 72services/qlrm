@@ -31,6 +31,6 @@ With QLRM this is not necessary.
       "GROUP BY c.id, c.name",
       "CustomerDetailsResult");
       
-    List<EmployeeTO> list = JpaSqlResultMapper.list(q, CustomerDetials.class);
+    List<EmployeeTO> list = JpaSqlResultMapper.list(q, om.acme.CustomerDetails.class);
    
 EmployeeTO does not have to be mapped!
