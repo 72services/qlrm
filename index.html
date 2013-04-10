@@ -31,32 +31,101 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>Welcome to GitHub Pages.</h3>
+        <h1>QLRM - Query Language Result Mapper</h1>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>In JPA there is no Constructor Expression for native SQL queries. QLRM fills the gap!</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<p>And because the implementation was quite easy there is an implentation for JDBC resultsets as well.</p>
+
+<h3>But what about JPA 2.1 and the ConstructorResult?</h3>
+
+<p>Read more: <a href="https://github.com/simasch/qlrm/blob/master/ConstructorResult.md">https://github.com/simasch/qlrm/blob/master/ConstructorResult.md</a></p>
+
+<h2>Maven Dependency</h2>
+
+<p>QLRM is available in Maven Central</p>
+
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;ch.simas.qlrm&lt;/groupId&gt;
+  &lt;artifactId&gt;qlrm&lt;/artifactId&gt;
+  &lt;version&gt;1.0&lt;/version&gt;
+&lt;/dependency&gt;
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<h2>Usage</h2>
 
-<h3>Designer Templates</h3>
+<p>Usage is quit forward but be aware of:</p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<ul>
+<li>The Constructor must have the same number of arguments as the result of the SQL query</li>
+<li>The result types must match the constructor arguments types</li>
+</ul><h3>JPA Native Query</h3>
 
-<h3>Rather Drive Stick?</h3>
+<h4>List</h4>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<pre><code>Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE");
+List&lt;EmployeeTO&gt; list = JpaSqlResultMapper.list(q, EmployeeTO.class);
+</code></pre>
 
-<h3>Authors and Contributors</h3>
+<h4>Unique Result</h4>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<pre><code>Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE WHERE ID = 1");
+EmployeeTO to = JpaSqlResultMapper.uniqueResult(q, EmployeeTO.class);
+</code></pre>
 
-<h3>Support or Contact</h3>
+<h3>JPQL</h3>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<h4>List</h4>
+
+<pre><code>Query q = em.createQuery("SELECT e.id, e.name FROM Employee e");
+List&lt;EmployeeTO&gt; list = JpaSqlResultMapper.list(q, EmployeeTO.class);
+</code></pre>
+
+<h4>Unique Result</h4>
+
+<pre><code>Query q = em.createNativeQuery("SELECT e.id, e.name FROM Employee e WHERE e.id = 1");
+EmployeeTO to = JpaSqlResultMapper.uniqueResult(q, EmployeeTO.class);
+</code></pre>
+
+<h3>JDBC SQL</h3>
+
+<h4>List</h4>
+
+<pre><code>stmt.execute("SELECT ID, NAME FROM EMPLOYEE");
+List&lt;EmployeeTO&gt; list = JdbcSqlResultMapper.list(stmt.getResultSet(), EmployeeTO.class);
+</code></pre>
+
+<h4>Unique Result</h4>
+
+<pre><code>boolean ok = stmt.execute("SELECT ID, NAME FROM EMPLOYEE WHERE ID = 1");
+Assert.assertTrue(ok);
+</code></pre>
+
+<h2>References</h2>
+
+<p>The QL Result Mapper is inspired by EclipseLink and Hibernate:</p>
+
+<ul>
+<li><a href="http://onpersistence.blogspot.ch/2010/07/eclipselink-jpa-native-constructor.html">http://onpersistence.blogspot.ch/2010/07/eclipselink-jpa-native-constructor.html</a></li>
+<li><a href="http://docs.jboss.org/hibernate/orm/3.3/reference/en/html/querysql.html#d0e13904">http://docs.jboss.org/hibernate/orm/3.3/reference/en/html/querysql.html#d0e13904</a></li>
+</ul><h1>Class Generator</h1>
+
+<p>ClassGenerator is a simple utility to generate transfer objects from database tables.</p>
+
+<h2>Usage</h2>
+
+<p>The first parameter is the path where the source file should be generated to. The second is the package name, third a suffix.
+With the forth parameter you can define if the fields should be public or if the generator must generate getters. 
+Then a database connection must be passed. And the last parameter is a vargargs where you can passe one or multiple table names.</p>
+
+<pre><code>ClassGenerator.generateFromTables("src/test/java/", "ch.simas.sqlresultmapper.to", "TO", false, con, "EMPLOYEE");
+</code></pre>
+
+<h1>License</h1>
+
+<p>SQL Result Mapper is open source and free software under Apache License, Version 2:</p>
+
+<p><a href="http://www.apache.org/licenses/LICENSE-2.0.html">http://www.apache.org/licenses/LICENSE-2.0.html</a></p>
       </section>
     </div>
 
