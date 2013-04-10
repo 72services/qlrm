@@ -1,4 +1,4 @@
-# QLRM - Query Language Result Mapper
+#Why?
 In JPA there is no Constructor Expression for native SQL queries. QLRM fills the gap!
 
 And because the implementation was quite easy there is an implentation for JDBC resultsets as well.
