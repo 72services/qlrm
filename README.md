@@ -1,7 +1,7 @@
 #Why?
 In JPA there is no Constructor Expression for native SQL queries. QLRM fills the gap!
 
-And because the implementation was quite easy there is an implentation for JDBC resultsets as well.
+And because the implementation was quite easy there is an implementation for JDBC resultsets as well.
 
 ### But what about JPA 2.1 and the ConstructorResult?
 Read more: https://github.com/simasch/qlrm/blob/master/ConstructorResult.md
@@ -16,7 +16,7 @@ QLRM is available in Maven Central
     </dependency>
 
 ##Usage
-Usage is quit forward but be aware of:
+Usage is quite forward but be aware of:
 - The Constructor must have the same number of arguments as the result of the SQL query
 - The result types must match the constructor arguments types
 
