@@ -1,4 +1,4 @@
-package ch.simas.sqlresultmapper.to;
+package org.qlrm.to;
 
 import java.sql.*;
 import java.util.*;

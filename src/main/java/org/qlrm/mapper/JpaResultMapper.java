@@ -1,4 +1,4 @@
-package ch.simas.sqlresultmapper;
+package org.qlrm.mapper;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-public class JpaSqlResultMapper {
+public class JpaResultMapper {
 
     public static <T> List<T> list(Query q, Class<T> clazz) throws IllegalArgumentException {
         List<T> result = new ArrayList<T>();

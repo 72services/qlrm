@@ -1,4 +1,4 @@
-package ch.simas.generator;
+package org.qlrm.generator;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

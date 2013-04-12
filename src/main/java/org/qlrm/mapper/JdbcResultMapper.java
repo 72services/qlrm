@@ -1,4 +1,4 @@
-package ch.simas.sqlresultmapper;
+package org.qlrm.mapper;
 
 import java.lang.reflect.Constructor;
 import java.sql.ResultSet;
@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JdbcSqlResultMapper {
+public class JdbcResultMapper {
 
     public static <T> List<T> list(ResultSet rs, Class<T> clazz) throws SQLException {
         List<T> result = new ArrayList<T>();
