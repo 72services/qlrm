@@ -12,7 +12,7 @@ QLRM is available in Maven Central
     <dependency>
       <groupId>ch.simas.qlrm</groupId>
       <artifactId>qlrm</artifactId>
-      <version>1.0</version>
+      <version>1.1</version>
     </dependency>
 
 ##Usage
@@ -23,22 +23,22 @@ Usage is quite forward but be aware of:
 ###JPA Native Query
 #### List
     Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE");
-    List<EmployeeTO> list = JpaSqlResultMapper.list(q, EmployeeTO.class);
+    List<EmployeeTO> list = JpaResultMapper.list(q, EmployeeTO.class);
 #### Unique Result
     Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE WHERE ID = 1");
-    EmployeeTO to = JpaSqlResultMapper.uniqueResult(q, EmployeeTO.class);
+    EmployeeTO to = JpaResultMapper.uniqueResult(q, EmployeeTO.class);
 ###JPQL
 #### List
     Query q = em.createQuery("SELECT e.id, e.name FROM Employee e");
-    List<EmployeeTO> list = JpaSqlResultMapper.list(q, EmployeeTO.class);
+    List<EmployeeTO> list = JpaResultMapper.list(q, EmployeeTO.class);
 #### Unique Result
     Query q = em.createNativeQuery("SELECT e.id, e.name FROM Employee e WHERE e.id = 1");
-    EmployeeTO to = JpaSqlResultMapper.uniqueResult(q, EmployeeTO.class);
+    EmployeeTO to = JpaResultMapper.uniqueResult(q, EmployeeTO.class);
 
 ###JDBC SQL
 #### List
     stmt.execute("SELECT ID, NAME FROM EMPLOYEE");
-    List<EmployeeTO> list = JdbcSqlResultMapper.list(stmt.getResultSet(), EmployeeTO.class);
+    List<EmployeeTO> list = JdbcResultMapper.list(stmt.getResultSet(), EmployeeTO.class);
 #### Unique Result
     boolean ok = stmt.execute("SELECT ID, NAME FROM EMPLOYEE WHERE ID = 1");
     Assert.assertTrue(ok);
