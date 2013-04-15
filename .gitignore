@@ -4,3 +4,6 @@
 /pom.xml.releaseBackup
 /release.properties
 /Employee.java
+/.settings
+/.classpath
+/.project
