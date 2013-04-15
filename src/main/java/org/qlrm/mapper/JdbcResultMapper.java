@@ -8,7 +8,8 @@ import java.util.List;
 
 public class JdbcResultMapper {
 
-    public static <T> List<T> list(ResultSet rs, Class<T> clazz) throws SQLException {
+    @SuppressWarnings("unchecked")
+	public static <T> List<T> list(ResultSet rs, Class<T> clazz) throws SQLException {
         List<T> result = new ArrayList<T>();
         Constructor<?> ctor = (Constructor<?>) clazz.getDeclaredConstructors()[0];
 
@@ -22,7 +23,8 @@ public class JdbcResultMapper {
         return result;
     }
 
-    public static <T> T uniqueResult(ResultSet rs, Class<T> clazz) throws SQLException {
+    @SuppressWarnings("unchecked")
+	public static <T> T uniqueResult(ResultSet rs, Class<T> clazz) throws SQLException {
         Constructor<T> ctor = (Constructor<T>) clazz.getDeclaredConstructors()[0];
         rs.next();
         Object[] objs = new Object[ctor.getParameterTypes().length];
@@ -32,7 +34,8 @@ public class JdbcResultMapper {
         return createBean(ctor, objs);
     }
 
-    private static <T> T createBean(Constructor<?> ctor, Object[] args) {
+    @SuppressWarnings("unchecked")
+	private static <T> T createBean(Constructor<?> ctor, Object[] args) {
         try {
             return (T) ctor.newInstance(args);
         } catch (Exception e) {

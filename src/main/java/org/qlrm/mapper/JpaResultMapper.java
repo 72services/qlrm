@@ -8,7 +8,8 @@ import javax.persistence.Query;
 
 public class JpaResultMapper {
 
-    public static <T> List<T> list(Query q, Class<T> clazz) throws IllegalArgumentException {
+    @SuppressWarnings("unchecked")
+	public static <T> List<T> list(Query q, Class<T> clazz) throws IllegalArgumentException {
         List<T> result = new ArrayList<T>();
         Constructor<?> ctor = (Constructor<?>) clazz.getDeclaredConstructors()[0];
         List<Object[]> list = q.getResultList();
@@ -30,7 +31,8 @@ public class JpaResultMapper {
         return createBean(ctor, (Object[]) rec);
     }
 
-    private static <T> T createBean(Constructor<?> ctor, Object[] args) {
+    @SuppressWarnings("unchecked")
+	private static <T> T createBean(Constructor<?> ctor, Object[] args) {
         try {
             return (T) ctor.newInstance(args);
         } catch (Exception e) {
