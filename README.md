@@ -23,17 +23,17 @@ Usage is quite forward but be aware of:
 ###JPA Native Query
 #### List
     Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE");
-    List<EmployeeTO> list = JpaResultMapper.list(q, EmployeeTO.class);
+    List<EmployeeTO> list = jpaResultMapper.list(q, EmployeeTO.class);
 #### Unique Result
     Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE WHERE ID = 1");
-    EmployeeTO to = JpaResultMapper.uniqueResult(q, EmployeeTO.class);
+    EmployeeTO to = jpaResultMapper.uniqueResult(q, EmployeeTO.class);
 ###JPQL
 #### List
     Query q = em.createQuery("SELECT e.id, e.name FROM Employee e");
     List<EmployeeTO> list = JpaResultMapper.list(q, EmployeeTO.class);
 #### Unique Result
     Query q = em.createNativeQuery("SELECT e.id, e.name FROM Employee e WHERE e.id = 1");
-    EmployeeTO to = JpaResultMapper.uniqueResult(q, EmployeeTO.class);
+    EmployeeTO to = jpaResultMapper.uniqueResult(q, EmployeeTO.class);
 
 ###JDBC SQL
 #### List
