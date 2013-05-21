@@ -16,6 +16,8 @@ import org.junit.Test;
 public class JdbcResultMapperTest {
 
     private static Connection con;
+    private static JdbcResultMapper jdbcResultMapper = new JdbcResultMapper();
+    private static ClassGenerator classGenerator = new ClassGenerator();
 
     @BeforeClass
     public static void init() throws SQLException, FileNotFoundException, ClassNotFoundException {
@@ -30,7 +32,7 @@ public class JdbcResultMapperTest {
         stmt.executeUpdate("INSERT INTO EMPLOYEE (ID , NAME) VALUES (1, 'Peter Muster')");
         stmt.close();
 
-        ClassGenerator.generateFromTables("src/test/java/", "org.qlrm.to", "TO", false, con, "EMPLOYEE");
+        classGenerator.generateFromTables("src/test/java/", "org.qlrm.to", "TO", false, con, "EMPLOYEE");
     }
 
     @Test
@@ -39,7 +41,7 @@ public class JdbcResultMapperTest {
         boolean ok = stmt.execute("SELECT ID, NAME FROM EMPLOYEE");
         Assert.assertTrue(ok);
 
-        List<EmployeeTO> list = JdbcResultMapper.list(stmt.getResultSet(), EmployeeTO.class);
+        List<EmployeeTO> list = jdbcResultMapper.list(stmt.getResultSet(), EmployeeTO.class);
         Assert.assertNotNull(list);
         Assert.assertTrue(list.size() > 0);
 
@@ -54,7 +56,7 @@ public class JdbcResultMapperTest {
         boolean ok = stmt.execute("SELECT ID, NAME FROM EMPLOYEE WHERE ID = 1");
         Assert.assertTrue(ok);
 
-        EmployeeTO to = JdbcResultMapper.uniqueResult(stmt.getResultSet(), EmployeeTO.class);
+        EmployeeTO to = jdbcResultMapper.uniqueResult(stmt.getResultSet(), EmployeeTO.class);
         Assert.assertNotNull(to);
 
         System.out.println(to);

@@ -1,6 +1,5 @@
 package org.qlrm.generator;
 
-import org.qlrm.generator.ClassGenerator;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,6 +12,7 @@ import org.junit.Test;
 public class ClassGeneratorTest {
 
     private static Connection con;
+    private static ClassGenerator classGenerator = new ClassGenerator();
 
     @BeforeClass
     public static void setUpClass() {
@@ -30,7 +30,7 @@ public class ClassGeneratorTest {
     @Test
     public void generateFromTables() {
         try {
-            ClassGenerator.generateFromTables(System.getProperty("user.dir"), null, null, false, con, "EMPLOYEE");
+            classGenerator.generateFromTables(System.getProperty("user.dir"), null, null, false, con, "EMPLOYEE");
         } catch (Exception ex) {
             Logger.getLogger(ClassGeneratorTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -41,7 +41,7 @@ public class ClassGeneratorTest {
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT NAME FROM EMPLOYEE");
-            ClassGenerator.generateFromResultSet(System.getProperty("user.dir"), null, "EmployeeNameTO", false, rs);
+            classGenerator.generateFromResultSet(System.getProperty("user.dir"), null, "EmployeeNameTO", false, rs);
             stmt.close();
         } catch (Exception ex) {
             Logger.getLogger(ClassGeneratorTest.class.getName()).log(Level.SEVERE, null, ex);

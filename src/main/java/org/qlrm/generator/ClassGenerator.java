@@ -12,7 +12,7 @@ import java.sql.Types;
 
 public class ClassGenerator {
 
-    public static void generateFromTables(String path, String pkg, String suffix, boolean publicFields, Connection con, String... tables) throws SQLException, FileNotFoundException {
+    public void generateFromTables(String path, String pkg, String suffix, boolean publicFields, Connection con, String... tables) throws SQLException, FileNotFoundException {
 
         DatabaseMetaData metadata = con.getMetaData();
         for (String table : tables) {
@@ -29,7 +29,7 @@ public class ClassGenerator {
         }
     }
 
-    public static void generateFromResultSet(String path, String pkg, String className, boolean publicFields, ResultSet resultSet) throws SQLException, FileNotFoundException {
+    public void generateFromResultSet(String path, String pkg, String className, boolean publicFields, ResultSet resultSet) throws SQLException, FileNotFoundException {
         ResultSetMetaData metaData = resultSet.getMetaData();
 
         PrintWriter outputStream = new PrintWriter(new FileOutputStream(createFileName(path, pkg, className)));
@@ -41,7 +41,7 @@ public class ClassGenerator {
         outputStream.close();
     }
 
-    private static void createClassHeader(PrintWriter outputStream, String pkg, String className) {
+    private void createClassHeader(PrintWriter outputStream, String pkg, String className) {
         if (pkg != null) {
             outputStream.println("package " + pkg + ";\n");
         }
@@ -52,7 +52,7 @@ public class ClassGenerator {
         outputStream.println("public class " + className + " {\n");
     }
 
-    private static String createFileName(String path, String pkg, String className) {
+    private String createFileName(String path, String pkg, String className) {
         if (pkg == null) {
             return path + "/" + className + ".java";
         } else {
@@ -60,7 +60,7 @@ public class ClassGenerator {
         }
     }
 
-    private static void createClassBody(ResultSet colResults, PrintWriter outputStream, String className, boolean publicFields) throws SQLException {
+    private void createClassBody(ResultSet colResults, PrintWriter outputStream, String className, boolean publicFields) throws SQLException {
         StringBuilder ctrArgs = new StringBuilder();
         StringBuilder ctrBody = new StringBuilder();
         StringBuilder getters = new StringBuilder();
@@ -77,7 +77,7 @@ public class ClassGenerator {
         writeCtrAndGetters(outputStream, className, ctrArgs, ctrBody, getters);
     }
 
-    private static void createClassBody(ResultSetMetaData metaData, PrintWriter outputStream, String className, boolean publicFields) throws SQLException {
+    private void createClassBody(ResultSetMetaData metaData, PrintWriter outputStream, String className, boolean publicFields) throws SQLException {
         StringBuilder ctrArgs = new StringBuilder();
         StringBuilder ctrBody = new StringBuilder();
         StringBuilder getters = new StringBuilder();
@@ -94,7 +94,7 @@ public class ClassGenerator {
         writeCtrAndGetters(outputStream, className, ctrArgs, ctrBody, getters);
     }
 
-    private static String sqlTypeToJavaTypeString(int dataType) {
+    private String sqlTypeToJavaTypeString(int dataType) {
         String typeString;
         switch (dataType) {
             case Types.TINYINT:
@@ -152,14 +152,14 @@ public class ClassGenerator {
         return typeString;
     }
 
-    private static String generateClassName(String table, String suffix) {
+    private String generateClassName(String table, String suffix) {
         if (suffix == null) {
             suffix = "";
         }
         return table.substring(0, 1).toUpperCase() + table.substring(1, table.length()).toLowerCase() + suffix;
     }
 
-    private static void generateCtrAndGetters(int colType, PrintWriter outputStream, boolean publicFields, String name, StringBuilder ctrArgs, StringBuilder ctrBody, StringBuilder getters) {
+    private void generateCtrAndGetters(int colType, PrintWriter outputStream, boolean publicFields, String name, StringBuilder ctrArgs, StringBuilder ctrBody, StringBuilder getters) {
         String type = sqlTypeToJavaTypeString(colType);
         outputStream.println(publicFields ? "  public " : "  private " + type + " " + name + ";");
         ctrArgs.append(type).append(" ").append(name);
@@ -170,7 +170,7 @@ public class ClassGenerator {
         }
     }
 
-    private static void writeCtrAndGetters(PrintWriter outputStream, String className, StringBuilder ctrArgs, StringBuilder ctrBody, StringBuilder getters) {
+    private void writeCtrAndGetters(PrintWriter outputStream, String className, StringBuilder ctrArgs, StringBuilder ctrBody, StringBuilder getters) {
         outputStream.println("\n");
         outputStream.println("  public " + className + " (" + ctrArgs.toString() + ") {\n");
         outputStream.println(ctrBody.toString());

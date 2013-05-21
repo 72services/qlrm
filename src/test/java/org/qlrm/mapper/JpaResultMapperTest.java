@@ -22,6 +22,8 @@ import org.junit.Test;
 public class JpaResultMapperTest {
 
     private static EntityManager em;
+    private static JpaResultMapper jpaResultMapper = new JpaResultMapper();
+    private static ClassGenerator classGenerator = new ClassGenerator();
 
     @BeforeClass
     public static void init() throws ClassNotFoundException, SQLException, FileNotFoundException {
@@ -36,13 +38,13 @@ public class JpaResultMapperTest {
 
         Class.forName("org.h2.Driver");
         Connection con = DriverManager.getConnection("jdbc:h2:mem:test", "sa", "");
-        ClassGenerator.generateFromTables("src/test/java/", "org.qlrm.to", "TO", false, con, "EMPLOYEE");
+        classGenerator.generateFromTables("src/test/java/", "org.qlrm.to", "TO", false, con, "EMPLOYEE");
     }
 
     @Test
     public void listWithSql() {
         Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE");
-        List<EmployeeTO> list = JpaResultMapper.list(q, EmployeeTO.class);
+        List<EmployeeTO> list = jpaResultMapper.list(q, EmployeeTO.class);
 
         Assert.assertNotNull(list);
         for (EmployeeTO rec : list) {
@@ -53,7 +55,7 @@ public class JpaResultMapperTest {
     @Test
     public void listWithJpql() {
         Query q = em.createQuery("SELECT e.id, e.name FROM Employee e");
-        List<EmployeeTO> list = JpaResultMapper.list(q, EmployeeTO.class);
+        List<EmployeeTO> list = jpaResultMapper.list(q, EmployeeTO.class);
 
         Assert.assertNotNull(list);
         for (EmployeeTO rec : list) {
@@ -64,7 +66,7 @@ public class JpaResultMapperTest {
     @Test
     public void uniqueResultWithSql() {
         Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE WHERE ID = 1");
-        EmployeeTO to = JpaResultMapper.uniqueResult(q, EmployeeTO.class);
+        EmployeeTO to = jpaResultMapper.uniqueResult(q, EmployeeTO.class);
 
         Assert.assertNotNull(to);
         System.out.println(to);
@@ -73,7 +75,7 @@ public class JpaResultMapperTest {
     @Test
     public void uniqueResultWithJpql() {
         Query q = em.createNativeQuery("SELECT e.id, e.name FROM Employee e WHERE e.id = 1");
-        EmployeeTO to = JpaResultMapper.uniqueResult(q, EmployeeTO.class);
+        EmployeeTO to = jpaResultMapper.uniqueResult(q, EmployeeTO.class);
 
         Assert.assertNotNull(to);
         System.out.println(to);
