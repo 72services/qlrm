@@ -1,6 +1,5 @@
 package org.qlrm.generator;
 
-import org.qlrm.generator.ClassGenerator;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
