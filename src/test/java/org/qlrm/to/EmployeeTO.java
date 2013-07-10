@@ -1,8 +1,9 @@
 package org.qlrm.to;
 
-import java.sql.*;
-import java.util.*;
-import java.math.*;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.math.BigDecimal;
 
 
 public class EmployeeTO {

@@ -49,9 +49,10 @@ public class ClassGenerator {
         if (pkg != null) {
             outputStream.println("package " + pkg + ";\n");
         }
-        outputStream.println("import java.sql.*;");
-        outputStream.println("import java.util.*;");
-        outputStream.println("import java.math.*;");
+        outputStream.println("import java.sql.Date;");
+        outputStream.println("import java.sql.Time;");
+        outputStream.println("import java.sql.Timestamp;");
+        outputStream.println("import java.math.BigDecimal;");
         outputStream.println("\n");
         outputStream.println("public class " + className + " {\n");
     }
@@ -131,10 +132,10 @@ public class ClassGenerator {
                 break;
             case Types.NUMERIC:
             case Types.DECIMAL:
-                typeString = "java.math.BigDecimal";
+                typeString = "BigDecimal";
                 break;
             case Types.DATE:
-                typeString = "java.sql.Date";
+                typeString = "Date";
                 break;
             case Types.BIT:
                 typeString = "boolean";
@@ -143,10 +144,10 @@ public class ClassGenerator {
                 typeString = "Object";
                 break;
             case Types.TIMESTAMP:
-                typeString = "java.sql.Timestamp";
+                typeString = "Timestamp";
                 break;
             case Types.TIME:
-                typeString = "java.sql.Time";
+                typeString = "Time";
                 break;
             case Types.BINARY:
             case Types.VARBINARY:
