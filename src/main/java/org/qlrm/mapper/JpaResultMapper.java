@@ -9,7 +9,7 @@ import javax.persistence.Query;
 public class JpaResultMapper {
 
     @SuppressWarnings("unchecked")
-	public static <T> List<T> list(Query q, Class<T> clazz) throws IllegalArgumentException {
+    public <T> List<T> list(Query q, Class<T> clazz) throws IllegalArgumentException {
         List<T> result = new ArrayList<T>();
         Constructor<?> ctor = (Constructor<?>) clazz.getDeclaredConstructors()[0];
         List<Object[]> list = q.getResultList();
@@ -22,7 +22,7 @@ public class JpaResultMapper {
         return result;
     }
 
-    public static <T> T uniqueResult(Query q, Class<T> clazz) {
+    public <T> T uniqueResult(Query q, Class<T> clazz) {
         Object rec = q.getSingleResult();
         Constructor<?> ctor = (Constructor<?>) clazz.getDeclaredConstructors()[0];
         if (ctor.getParameterTypes().length == 1) {
@@ -32,7 +32,7 @@ public class JpaResultMapper {
     }
 
     @SuppressWarnings("unchecked")
-	private static <T> T createBean(Constructor<?> ctor, Object[] args) {
+    private <T> T createBean(Constructor<?> ctor, Object[] args) {
         try {
             return (T) ctor.newInstance(args);
         } catch (Exception e) {
