@@ -22,26 +22,38 @@ Usage is quite forward but be aware of:
 
 ###JPA Native Query
 #### List
-    Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE");
-    List<EmployeeTO> list = jpaResultMapper.list(q, EmployeeTO.class);
+```java
+Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE");
+List<EmployeeTO> list = jpaResultMapper.list(q, EmployeeTO.class);
+```
 #### Unique Result
-    Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE WHERE ID = 1");
-    EmployeeTO to = jpaResultMapper.uniqueResult(q, EmployeeTO.class);
+```java
+Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE WHERE ID = 1");
+EmployeeTO to = jpaResultMapper.uniqueResult(q, EmployeeTO.class);
+```
 ###JPQL
 #### List
-    Query q = em.createQuery("SELECT e.id, e.name FROM Employee e");
-    List<EmployeeTO> list = jpaResultMapper.list(q, EmployeeTO.class);
+```java
+Query q = em.createQuery("SELECT e.id, e.name FROM Employee e");
+List<EmployeeTO> list = jpaResultMapper.list(q, EmployeeTO.class);
+```
 #### Unique Result
-    Query q = em.createNativeQuery("SELECT e.id, e.name FROM Employee e WHERE e.id = 1");
-    EmployeeTO to = jpaResultMapper.uniqueResult(q, EmployeeTO.class);
+```java
+Query q = em.createNativeQuery("SELECT e.id, e.name FROM Employee e WHERE e.id = 1");
+EmployeeTO to = jpaResultMapper.uniqueResult(q, EmployeeTO.class);
+```
 
 ###JDBC SQL
 #### List
-    stmt.execute("SELECT ID, NAME FROM EMPLOYEE");
-    List<EmployeeTO> list = jdbcResultMapper.list(stmt.getResultSet(), EmployeeTO.class);
+```java
+stmt.execute("SELECT ID, NAME FROM EMPLOYEE");
+List<EmployeeTO> list = jdbcResultMapper.list(stmt.getResultSet(), EmployeeTO.class);
+```
 #### Unique Result
-    boolean ok = stmt.execute("SELECT ID, NAME FROM EMPLOYEE WHERE ID = 1");
-    Assert.assertTrue(ok);
+```java
+boolean ok = stmt.execute("SELECT ID, NAME FROM EMPLOYEE WHERE ID = 1");
+Assert.assertTrue(ok);
+```
 
 ##References
 The QL Result Mapper is inspired by EclipseLink and Hibernate:
@@ -56,7 +68,9 @@ The first parameter is the path where the source file should be generated to. Th
 With the forth parameter you can define if the fields should be public or if the generator must generate getters. 
 Then a database connection must be passed. And the last parameter is a vargargs where you can passe one or multiple table names.
 
-    classGenerator.generateFromTables("src/test/java/", "ch.simas.sqlresultmapper.to", "TO", false, con, "EMPLOYEE");
+```java
+classGenerator.generateFromTables("src/test/java/", "ch.simas.sqlresultmapper.to", "TO", false, con, "EMPLOYEE");
+```
 
 #License
 SQL Result Mapper is open source and free software under Apache License, Version 2:
