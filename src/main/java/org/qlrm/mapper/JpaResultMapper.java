@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-public class JpaResultMapper {
+public class JpaResultMapper extends ResultMapper {
 
     @SuppressWarnings("unchecked")
     public <T> List<T> list(Query q, Class<T> clazz) throws IllegalArgumentException {
@@ -17,7 +17,7 @@ public class JpaResultMapper {
             if (ctor.getParameterTypes().length == 1) {
                 obj = new Object[]{obj};
             }
-            result.add((T) createBean(ctor, (Object[]) obj));
+            result.add((T) createInstance(ctor, (Object[]) obj));
         }
         return result;
     }
@@ -28,15 +28,7 @@ public class JpaResultMapper {
         if (ctor.getParameterTypes().length == 1) {
             rec = new Object[]{rec};
         }
-        return createBean(ctor, (Object[]) rec);
+        return createInstance(ctor, (Object[]) rec);
     }
 
-    @SuppressWarnings("unchecked")
-    private <T> T createBean(Constructor<?> ctor, Object[] args) {
-        try {
-            return (T) ctor.newInstance(args);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

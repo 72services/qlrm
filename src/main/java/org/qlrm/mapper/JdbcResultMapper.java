@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JdbcResultMapper {
+public class JdbcResultMapper extends ResultMapper {
 
     @SuppressWarnings("unchecked")
     public <T> List<T> list(ResultSet rs, Class<T> clazz) throws SQLException {
@@ -18,7 +18,7 @@ public class JdbcResultMapper {
             for (int i = 0; i < ctor.getParameterTypes().length; i++) {
                 objs[i] = rs.getObject(i + 1);
             }
-            result.add((T) createBean(ctor, objs));
+            result.add((T) createInstance(ctor, objs));
         }
         return result;
     }
@@ -31,21 +31,6 @@ public class JdbcResultMapper {
         for (int i = 0; i < ctor.getParameterTypes().length; i++) {
             objs[i] = rs.getObject(i + 1);
         }
-        return createBean(ctor, objs);
-    }
-
-    @SuppressWarnings("unchecked")
-    private <T> T createBean(Constructor<?> ctor, Object[] args) {
-        try {
-            return (T) ctor.newInstance(args);
-        } catch (IllegalArgumentException e) {
-            StringBuilder sb = new StringBuilder("no constructor taking:\n");
-            for (Object object : args) {
-                sb.append("\t").append(object.getClass().getName()).append("\n");
-            }
-            throw new RuntimeException(sb.toString(), e);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return createInstance(ctor, objs);
     }
 }
