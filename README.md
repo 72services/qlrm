@@ -9,11 +9,13 @@ Read more: https://github.com/simasch/qlrm/blob/master/ConstructorResult.md
 ##Maven Dependency
 QLRM is available in Maven Central
 
-    <dependency>
-      <groupId>ch.simas.qlrm</groupId>
-      <artifactId>qlrm</artifactId>
-      <version>1.2</version>
-    </dependency>
+```xml
+<dependency>
+  <groupId>ch.simas.qlrm</groupId>
+  <artifactId>qlrm</artifactId>
+  <version>1.2</version>
+</dependency>
+```
 
 ##Usage
 Usage is quite forward but be aware of:
