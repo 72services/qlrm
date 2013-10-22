@@ -1,6 +1,6 @@
 # What about JPA 2.1 Constructor Result?
 With JPA 2.1 there will be the ConstructorResult annotation.
-.
+
 Example from the specification:
 ```java
 Query q = em.createNativeQuery(
