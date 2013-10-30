@@ -22,7 +22,7 @@ public class JdbcResultMapper extends ResultMapper {
         }
         return result;
     }
-	
+
     @SuppressWarnings("unchecked")
     public <T> T uniqueResult(ResultSet rs, Class<T> clazz) throws SQLException {
         Constructor<T> ctor = (Constructor<T>) getConstructor(rs, clazz);
@@ -33,8 +33,8 @@ public class JdbcResultMapper extends ResultMapper {
         }
         return createInstance(ctor, objs);
     }
-	
-	private Constructor<?> getConstructor(ResultSet rs, Class<?> clazz) throws SQLException {
+
+    private Constructor<?> getConstructor(ResultSet rs, Class<?> clazz) throws SQLException {
         Constructor<?> ctor = null;
         outer: for (Constructor<?> ct : clazz.getDeclaredConstructors()) {
             if (ct.getParameterTypes().length == rs.getMetaData().getColumnCount()) {
