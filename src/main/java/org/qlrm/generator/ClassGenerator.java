@@ -110,13 +110,13 @@ public class ClassGenerator {
                 typeString = "byte";
                 break;
             case Types.BIGINT:
-                typeString = "long";
+                typeString = "Long";
                 break;
             case Types.INTEGER:
-                typeString = "int";
+                typeString = "Integer";
                 break;
             case Types.SMALLINT:
-                typeString = "short";
+                typeString = "Short";
                 break;
             case Types.CHAR:
             case Types.VARCHAR:
@@ -125,10 +125,10 @@ public class ClassGenerator {
                 break;
             case Types.DOUBLE:
             case Types.FLOAT:
-                typeString = "double";
+                typeString = "Double";
                 break;
             case Types.REAL:
-                typeString = "float";
+                typeString = "Float";
                 break;
             case Types.NUMERIC:
             case Types.DECIMAL:

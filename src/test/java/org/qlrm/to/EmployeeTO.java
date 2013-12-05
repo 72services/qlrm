@@ -8,18 +8,18 @@ import java.math.BigDecimal;
 
 public class EmployeeTO {
 
-  private int id;
+  private Integer id;
   private String name;
 
 
-  public EmployeeTO (int id, String name) {
+  public EmployeeTO (Integer id, String name) {
 
     this.id = id;
     this.name = name;
 
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
  }
   public String getName() {
