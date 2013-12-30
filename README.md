@@ -13,7 +13,7 @@ QLRM is available in Maven Central
 <dependency>
   <groupId>ch.simas.qlrm</groupId>
   <artifactId>qlrm</artifactId>
-  <version>1.3</version>
+  <version>1.5.1</version>
 </dependency>
 ```
 
