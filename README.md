@@ -54,7 +54,7 @@ List<EmployeeTO> list = jdbcResultMapper.list(stmt.getResultSet(), EmployeeTO.cl
 #### Unique Result
 ```java
 boolean ok = stmt.execute("SELECT ID, NAME FROM EMPLOYEE WHERE ID = 1");
-Assert.assertTrue(ok);
+EmployeeTO to = jdbcResultMapper.uniqueResult(stmt.getResultSet(), EmployeeTO.class);
 ```
 
 ##References
