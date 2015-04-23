@@ -107,7 +107,7 @@
 <a id="unique-result-2" class="anchor" href="#unique-result-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unique Result</h4>
 
 <div class="highlight highlight-java"><pre><span class="pl-k">boolean</span> ok <span class="pl-k">=</span> stmt<span class="pl-k">.</span>execute(<span class="pl-s"><span class="pl-pds">"</span>SELECT ID, NAME FROM EMPLOYEE WHERE ID = 1<span class="pl-pds">"</span></span>);
-<span class="pl-smi">Assert</span><span class="pl-k">.</span>assertTrue(ok);</pre></div>
+<span class="pl-smi">EmployeeTO</span> to <span class="pl-k">=</span> jdbcResultMapper<span class="pl-k">.</span>uniqueResult(stmt<span class="pl-k">.</span>getResultSet(), <span class="pl-smi">EmployeeTO</span><span class="pl-k">.</span>class);</pre></div>
 
 <h2>
 <a id="references" class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h2>
