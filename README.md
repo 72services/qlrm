@@ -11,9 +11,9 @@ QLRM is available in Maven Central
 
 ```xml
 <dependency>
-  <groupId>ch.simas.qlrm</groupId>
-  <artifactId>qlrm</artifactId>
-  <version>1.5.1</version>
+    <groupId>ch.simas.qlrm</groupId>
+    <artifactId>qlrm</artifactId>
+    <version>1.5.2</version>
 </dependency>
 ```
 

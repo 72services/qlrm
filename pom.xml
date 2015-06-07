@@ -9,7 +9,7 @@
   
     <groupId>ch.simas.qlrm</groupId>
     <artifactId>qlrm</artifactId>
-    <version>1.5.2-SNAPSHOT</version>
+    <version>1.5.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>QLRM</name>
