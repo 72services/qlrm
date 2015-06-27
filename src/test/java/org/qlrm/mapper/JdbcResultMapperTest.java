@@ -32,7 +32,9 @@ public class JdbcResultMapperTest {
         stmt.executeUpdate("INSERT INTO EMPLOYEE (ID , NAME) VALUES (1, 'Peter Muster')");
         stmt.close();
 
-        classGenerator.generateFromTables("src/test/java/", "org.qlrm.to", "TO", false, con, "EMPLOYEE");
+        // FIXME stefanheimberg: deaktiviert weil ohne generierte TO Objekte kompiliert dieser Test auch nicht.
+        // generierung deaktiviert
+        //classGenerator.generateFromTables("src/test/java/", "org.qlrm.to", "TO", false, con, "EMPLOYEE");
     }
 
     @Test
