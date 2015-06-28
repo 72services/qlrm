@@ -36,9 +36,11 @@ public class JpaResultMapperTest {
         em.persist(e);
         trx.commit();
 
-        Class.forName("org.h2.Driver");
-        Connection con = DriverManager.getConnection("jdbc:h2:mem:test", "sa", "");
-        classGenerator.generateFromTables("src/test/java/", "org.qlrm.to", "TO", false, con, "EMPLOYEE");
+        // FIXME stefanheimberg: deaktiviert weil ohne generierte TO Objekte kompiliert dieser Test auch nicht.
+        // generierung deaktiviert
+        //Class.forName("org.h2.Driver");
+        //Connection con = DriverManager.getConnection("jdbc:h2:mem:test", "sa", "");
+        //classGenerator.generateFromTables("src/test/java/", "org.qlrm.to", "TO", false, con, "EMPLOYEE");
     }
 
     @Test
