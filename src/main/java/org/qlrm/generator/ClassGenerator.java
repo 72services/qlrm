@@ -11,25 +11,55 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 public class ClassGenerator {
+	
+	/**
+	 * @deprecated If the table is present in more schema the columns are duplicated.
+	 * 
+	 * @see generateFromTables( final String path, final String pkg, final String suffix, final boolean publicFields,
+	 *      final String schema, final Connection con, final String... tables)
+	 * 
+	 * 
+	 * @param path
+	 * @param pkg
+	 * @param suffix
+	 * @param publicFields
+	 * @param con
+	 * @param tables
+	 * @throws SQLException
+	 * @throws FileNotFoundException
+	 */
+	@Deprecated
+	public void generateFromTables(	final String path,
+									final String pkg,
+									final String suffix,
+									final boolean publicFields,
+									final Connection con,
+									final String... tables) throws SQLException, FileNotFoundException {
+		generateFromTables(path, pkg, suffix, publicFields, null, con, tables);
+	}
 
-    public void generateFromTables(String path, String pkg, String suffix, 
-            boolean publicFields, Connection con, String... tables) 
-            throws SQLException, FileNotFoundException {
-        DatabaseMetaData metadata = con.getMetaData();
-        for (String table : tables) {
-            String className = generateClassName(table, suffix);
-            PrintWriter outputStream = new PrintWriter(
-                    new FileOutputStream(createFileName(path, pkg, className)));
 
-            createClassHeader(outputStream, pkg, className);
+	public void generateFromTables(	final String path,
+									final String pkg,
+									final String suffix,
+									final boolean publicFields,
+									final String schema,
+									final Connection con,
+									final String... tables) throws SQLException, FileNotFoundException {
+		DatabaseMetaData metadata = con.getMetaData();
+		for (String table : tables) {
+			String className = generateClassName(table, suffix);
+			PrintWriter outputStream = new PrintWriter(new FileOutputStream(createFileName(path, pkg, className)));
 
-            ResultSet colResults = metadata.getColumns(null, null, table, null);
-            createClassBody(colResults, outputStream, className, publicFields);
+			createClassHeader(outputStream, pkg, className);
 
-            outputStream.close();
-            colResults.close();
-        }
-    }
+			ResultSet colResults = metadata.getColumns(null, schema, table, null);
+			createClassBody(colResults, outputStream, className, publicFields);
+
+			outputStream.close();
+			colResults.close();
+		}
+	}
 
     public void generateFromResultSet(String path, String pkg, String className, boolean 
             publicFields, ResultSet resultSet) 
