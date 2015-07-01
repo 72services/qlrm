@@ -10,7 +10,7 @@ public class JpaResultMapper extends ResultMapper {
 
     @SuppressWarnings("unchecked")
     public <T> List<T> list(Query q, Class<T> clazz) throws IllegalArgumentException {
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
         List<Object[]> list = q.getResultList();
         for (Object obj : list) {
             Constructor<?> ctor = findConstructor(clazz, (Object[]) obj);

@@ -4,8 +4,6 @@ import org.qlrm.generator.ClassGenerator;
 import org.qlrm.model.Employee;
 import org.qlrm.to.EmployeeTO;
 import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 
