@@ -9,6 +9,7 @@ Read more: https://github.com/simasch/qlrm/blob/master/ConstructorResult.md
 ### QLRM 1.6.0 New Features
 - Support for multiple constructors
 - Definition of schema for code generation
+
 Thanks to Stefan Heimberg https://github.com/StefanHeimberg and Nicola Mazarese https://github.com/nicolaMaza for their contribution!
 
 ##Maven Dependency
