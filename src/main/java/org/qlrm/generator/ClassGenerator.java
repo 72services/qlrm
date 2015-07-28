@@ -64,12 +64,15 @@ public class ClassGenerator {
         if (pkg != null) {
             outputStream.println("package " + pkg + ";\n");
         }
+
+		outputStream.println("import java.io.Serializable;");
         outputStream.println("import java.sql.Date;");
         outputStream.println("import java.sql.Time;");
         outputStream.println("import java.sql.Timestamp;");
         outputStream.println("import java.math.BigDecimal;");
+		outputStream.println("import java.sql.Blob;");
         outputStream.println("\n");
-        outputStream.println("public class " + className + " {\n");
+		outputStream.println("public class " + className + " implements Serializable {\n");
     }
 
     private String createFileName(String path, String pkg, String className) {
@@ -134,6 +137,8 @@ public class ClassGenerator {
                 typeString = "Short";
                 break;
             case Types.CHAR:
+			typeString = "Character";
+			break;
             case Types.VARCHAR:
             case Types.LONGVARCHAR:
                 typeString = "String";
@@ -163,6 +168,9 @@ public class ClassGenerator {
                 break;
             case Types.TIME:
                 typeString = "Time";
+                break;
+            case Types.BLOB:
+            	typeString = "Blob";
                 break;
             case Types.BINARY:
             case Types.VARBINARY:
