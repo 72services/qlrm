@@ -10,7 +10,7 @@ public class JdbcResultMapper extends ResultMapper {
 
     @SuppressWarnings("unchecked")
     public <T> List<T> list(ResultSet rs, Class<T> clazz) throws SQLException {
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
         Constructor<?> ctor = getConstructor(rs, clazz);
 
         while (rs.next()) {
@@ -36,7 +36,8 @@ public class JdbcResultMapper extends ResultMapper {
 
     private Constructor<?> getConstructor(ResultSet rs, Class<?> clazz) throws SQLException {
         Constructor<?> ctor = null;
-        outer: for (Constructor<?> ct : clazz.getDeclaredConstructors()) {
+        outer:
+        for (Constructor<?> ct : clazz.getDeclaredConstructors()) {
             if (ct.getParameterTypes().length == rs.getMetaData().getColumnCount()) {
                 for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
                     if (!ct.getParameterTypes()[i - 1].getName().equals(

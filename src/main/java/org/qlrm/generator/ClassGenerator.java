@@ -12,18 +12,34 @@ import java.sql.Types;
 
 public class ClassGenerator {
 
-    public void generateFromTables(String path, String pkg, String suffix, 
-            boolean publicFields, Connection con, String... tables) 
-            throws SQLException, FileNotFoundException {
+    /**
+     * @deprecated If the table is present in more schema the columns are duplicated.
+     */
+    @Deprecated
+    public void generateFromTables(final String path,
+            final String pkg,
+            final String suffix,
+            final boolean publicFields,
+            final Connection con,
+            final String... tables) throws SQLException, FileNotFoundException {
+        generateFromTables(path, pkg, suffix, publicFields, null, con, tables);
+    }
+
+    public void generateFromTables(final String path,
+            final String pkg,
+            final String suffix,
+            final boolean publicFields,
+            final String schema,
+            final Connection con,
+            final String... tables) throws SQLException, FileNotFoundException {
         DatabaseMetaData metadata = con.getMetaData();
         for (String table : tables) {
             String className = generateClassName(table, suffix);
-            PrintWriter outputStream = new PrintWriter(
-                    new FileOutputStream(createFileName(path, pkg, className)));
+            PrintWriter outputStream = new PrintWriter(new FileOutputStream(createFileName(path, pkg, className)));
 
             createClassHeader(outputStream, pkg, className);
 
-            ResultSet colResults = metadata.getColumns(null, null, table, null);
+            ResultSet colResults = metadata.getColumns(null, schema, table, null);
             createClassBody(colResults, outputStream, className, publicFields);
 
             outputStream.close();
@@ -31,8 +47,7 @@ public class ClassGenerator {
         }
     }
 
-    public void generateFromResultSet(String path, String pkg, String className, boolean 
-            publicFields, ResultSet resultSet) 
+    public void generateFromResultSet(String path, String pkg, String className, boolean publicFields, ResultSet resultSet)
             throws SQLException, FileNotFoundException {
         ResultSetMetaData metaData = resultSet.getMetaData();
 
@@ -49,12 +64,15 @@ public class ClassGenerator {
         if (pkg != null) {
             outputStream.println("package " + pkg + ";\n");
         }
+
+		outputStream.println("import java.io.Serializable;");
         outputStream.println("import java.sql.Date;");
         outputStream.println("import java.sql.Time;");
         outputStream.println("import java.sql.Timestamp;");
         outputStream.println("import java.math.BigDecimal;");
+		outputStream.println("import java.sql.Blob;");
         outputStream.println("\n");
-        outputStream.println("public class " + className + " {\n");
+		outputStream.println("public class " + className + " implements Serializable {\n");
     }
 
     private String createFileName(String path, String pkg, String className) {
@@ -65,8 +83,8 @@ public class ClassGenerator {
         }
     }
 
-    private void createClassBody(ResultSet colResults, PrintWriter outputStream, 
-            String className, boolean publicFields) 
+    private void createClassBody(ResultSet colResults, PrintWriter outputStream,
+            String className, boolean publicFields)
             throws SQLException {
         StringBuilder ctrArgs = new StringBuilder();
         StringBuilder ctrBody = new StringBuilder();
@@ -84,8 +102,8 @@ public class ClassGenerator {
         writeCtrAndGetters(outputStream, className, ctrArgs, ctrBody, getters);
     }
 
-    private void createClassBody(ResultSetMetaData metaData, PrintWriter outputStream, 
-            String className, boolean publicFields) 
+    private void createClassBody(ResultSetMetaData metaData, PrintWriter outputStream,
+            String className, boolean publicFields)
             throws SQLException {
         StringBuilder ctrArgs = new StringBuilder();
         StringBuilder ctrBody = new StringBuilder();
@@ -119,6 +137,8 @@ public class ClassGenerator {
                 typeString = "Short";
                 break;
             case Types.CHAR:
+			typeString = "Character";
+			break;
             case Types.VARCHAR:
             case Types.LONGVARCHAR:
                 typeString = "String";
@@ -149,6 +169,9 @@ public class ClassGenerator {
             case Types.TIME:
                 typeString = "Time";
                 break;
+            case Types.BLOB:
+            	typeString = "Blob";
+                break;
             case Types.BINARY:
             case Types.VARBINARY:
             case Types.LONGVARBINARY:
@@ -168,8 +191,8 @@ public class ClassGenerator {
         return table.substring(0, 1).toUpperCase() + table.substring(1, table.length()).toLowerCase() + suffix;
     }
 
-    private void generateCtrAndGetters(int colType, PrintWriter outputStream, 
-            boolean publicFields, String name, StringBuilder ctrArgs, 
+    private void generateCtrAndGetters(int colType, PrintWriter outputStream,
+            boolean publicFields, String name, StringBuilder ctrArgs,
             StringBuilder ctrBody, StringBuilder getters) {
         String type = sqlTypeToJavaTypeString(colType);
         outputStream.println(publicFields ? "  public " : "  private " + type + " " + name + ";");
@@ -181,7 +204,7 @@ public class ClassGenerator {
         }
     }
 
-    private void writeCtrAndGetters(PrintWriter outputStream, String className, 
+    private void writeCtrAndGetters(PrintWriter outputStream, String className,
             StringBuilder ctrArgs, StringBuilder ctrBody, StringBuilder getters) {
         outputStream.println("\n");
         outputStream.println("  public " + className + " (" + ctrArgs.toString() + ") {\n");

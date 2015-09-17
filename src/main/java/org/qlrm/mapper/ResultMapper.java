@@ -19,5 +19,5 @@ public abstract class ResultMapper {
             throw new RuntimeException(e);
         }
     }
-    
+
 }
