@@ -9,15 +9,15 @@ import javax.persistence.Query;
 public class JpaResultMapper extends ResultMapper {
 
 	@SuppressWarnings("unchecked")
-	public <T> List<T> list(Query q,
-							Class<T> clazz) throws IllegalArgumentException {
+	public <T> List<T> list(final Query q,
+							final Class<T> clazz) throws IllegalArgumentException {
 		List<T> result = new ArrayList<T>();
 		List<Object[]> list = q.getResultList();
 
 		Constructor<?> ctor = null;
 		// why finding a constructor for each item? The result set is the same!
 		if (list != null && !list.isEmpty()) {
-			ctor = findConstructor(clazz, (Object[]) list.get(0));
+			ctor = findConstructor(clazz, list.get(0));
 		}
 		for (Object obj : list) {
 			result.add((T) createInstance(ctor, (Object[]) obj));
@@ -25,15 +25,15 @@ public class JpaResultMapper extends ResultMapper {
 		return result;
 	}
 
-	public <T> T uniqueResult(	Query q,
-								Class<T> clazz) {
+	public <T> T uniqueResult(	final Query q,
+								final Class<T> clazz) {
 		Object rec = q.getSingleResult();
 		final Constructor<?> ctor = findConstructor(clazz, (Object[]) rec);
 		return createInstance(ctor, (Object[]) rec);
 	}
 
-	private Constructor<?> findConstructor(	Class<?> clazz,
-											Object[] args) {
+	private Constructor<?> findConstructor(	final Class<?> clazz,
+											final Object[] args) {
 		Constructor<?> ctor = null;
 		final Constructor<?>[] ctors = clazz.getDeclaredConstructors();
 
@@ -66,7 +66,7 @@ public class JpaResultMapper extends ResultMapper {
 		if (null == ctor) {
 			StringBuilder sb = new StringBuilder("No constructor taking:\n");
 			for (Object object : args) {
-				sb.append("\t").append(object.getClass().getName()).append("\n");
+				sb.append("\t").append(object != null ? object.getClass().getName() : null).append("\n");
 			}
 			throw new RuntimeException(sb.toString());
 		}
