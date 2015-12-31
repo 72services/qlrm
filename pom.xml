@@ -9,7 +9,7 @@
   
     <groupId>ch.simas.qlrm</groupId>
     <artifactId>qlrm</artifactId>
-    <version>1.6.2</version>
+    <version>1.6.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>QLRM</name>
@@ -36,6 +36,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
+        <project.scm.id>github</project.scm.id>
     </properties>
 
     <dependencies>
