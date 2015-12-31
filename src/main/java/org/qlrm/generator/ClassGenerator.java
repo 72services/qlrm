@@ -19,7 +19,6 @@ public class ClassGenerator {
 	 *      final String schema, final Connection con, final String... tables)
 	 * 
 	 * 
-	 * @param path
 	 * @param pkg
 	 * @param suffix
 	 * @param publicFields
