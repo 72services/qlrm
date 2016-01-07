@@ -30,5 +30,5 @@ Query q = em.createNativeQuery(
     "WHERE o.cid = c.id " +
     "GROUP BY c.id, c.name");
       
-List<CustomerDetailsResult> list = JpaResultMapper.list(q, CustomerDetails.class);
+List<CustomerDetailsResult> list = jpaResultMapper.list(q, CustomerDetails.class);
 ```
