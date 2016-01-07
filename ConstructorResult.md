@@ -28,8 +28,7 @@ Query q = em.createNativeQuery(
     "SELECT c.id, c.name, COUNT(o) as orderCount, AVG(o.price) AS avgOrder " +
     "FROM Customer c, Orders o " +
     "WHERE o.cid = c.id " +
-    "GROUP BY c.id, c.name",
-    "CustomerDetailsResult");
+    "GROUP BY c.id, c.name");
       
-List<EmployeeTO> list = JpaResultMapper.list(q, com.acme.CustomerDetails.class);
+List<CustomerDetailsResult> list = JpaResultMapper.list(q, CustomerDetails.class);
 ```
