@@ -23,7 +23,7 @@ public class JpaResultMapperTest {
     private static EntityManager em;
     private static JpaResultMapper jpaResultMapper = new JpaResultMapper();
     private static ClassGenerator classGenerator = new ClassGenerator();
-	private static int employeeId;
+    private static int employeeId;
 
     @BeforeClass
     public static void init() throws ClassNotFoundException, SQLException, FileNotFoundException {
@@ -35,7 +35,7 @@ public class JpaResultMapperTest {
         e.setName("Peter Muster");
         em.persist(e);
         trx.commit();
-		employeeId = e.getId();
+        employeeId = e.getId();
 
         // FIXME stefanheimberg: deaktiviert weil ohne generierte TO Objekte kompiliert dieser Test auch nicht.
         // generierung deaktiviert
@@ -66,26 +66,26 @@ public class JpaResultMapperTest {
         }
     }
 
-	@Test
-	public void listWithJpqlWhenUniqueResult() {
-		Query q = em.createQuery("SELECT e.id FROM Employee e");
-		List<Long> list = jpaResultMapper.list(q, Long.class);
+    @Test
+    public void listWithJpqlWhenUniqueResult() {
+        Query q = em.createQuery("SELECT e.id FROM Employee e");
+        List<Long> list = jpaResultMapper.list(q, Long.class);
 
-		Assert.assertNotNull(list);
-		Assert.assertEquals(1, list.size());
-		Assert.assertEquals(employeeId, list.get(0).longValue());
-	}
+        Assert.assertNotNull(list);
+        Assert.assertEquals(1, list.size());
+        Assert.assertEquals(employeeId, list.get(0).longValue());
+    }
 
-	@Test
-	public void listWithJpqlWithNoResult() {
-		Query q = em.createQuery("SELECT e FROM Employee e WHERE e.id=?1");
-		q.setParameter(1, employeeId + 1);
+    @Test
+    public void listWithJpqlWithNoResult() {
+        Query q = em.createQuery("SELECT e FROM Employee e WHERE e.id=?1");
+        q.setParameter(1, employeeId + 1);
 
-		List<Long> list = jpaResultMapper.list(q, Long.class);
+        List<Long> list = jpaResultMapper.list(q, Long.class);
 
-		Assert.assertNotNull(list);
-		Assert.assertTrue(list.isEmpty());
-	}
+        Assert.assertNotNull(list);
+        Assert.assertTrue(list.isEmpty());
+    }
 
     @Test
     public void uniqueResultWithSql() {
@@ -97,29 +97,29 @@ public class JpaResultMapperTest {
     }
 
     @Test
-	public void uniqueResultWithJpqlWhenSingleRow() {
-		Query q = em.createNativeQuery("SELECT e.id, e.name FROM Employee e WHERE e.id = 1");
-		EmployeeTO to = jpaResultMapper.uniqueResult(q, EmployeeTO.class);
+    public void uniqueResultWithJpqlWhenSingleRow() {
+        Query q = em.createNativeQuery("SELECT e.id, e.name FROM Employee e WHERE e.id = 1");
+        EmployeeTO to = jpaResultMapper.uniqueResult(q, EmployeeTO.class);
 
-		Assert.assertNotNull(to);
-		System.out.println(to);
-	}
-
-	@Test
-	public void uniqueResultWithJpqlWhenSingleResult() {
-		Query q = em.createQuery("SELECT COUNT(e) FROM Employee e");
-		Long result = jpaResultMapper.uniqueResult(q, Long.class);
-
-		Assert.assertNotNull(result);
-		Assert.assertEquals(employeeId, result.longValue());
+        Assert.assertNotNull(to);
+        System.out.println(to);
     }
 
-	@Test(expected = NoResultException.class)
-	public void uniqueResultWithJpqlWhenNoResult() {
-		Query q = em.createQuery("SELECT e FROM Employee e WHERE e.id=?1");
-		q.setParameter(1, employeeId + 1);
+    @Test
+    public void uniqueResultWithJpqlWhenSingleResult() {
+        Query q = em.createQuery("SELECT COUNT(e) FROM Employee e");
+        Long result = jpaResultMapper.uniqueResult(q, Long.class);
 
-		jpaResultMapper.uniqueResult(q, Long.class);
-		Assert.fail("Expected " + NoResultException.class.getSimpleName() + " but not exception was thrown.");
-	}
+        Assert.assertNotNull(result);
+        Assert.assertEquals(employeeId, result.longValue());
+    }
+
+    @Test(expected = NoResultException.class)
+    public void uniqueResultWithJpqlWhenNoResult() {
+        Query q = em.createQuery("SELECT e FROM Employee e WHERE e.id=?1");
+        q.setParameter(1, employeeId + 1);
+
+        jpaResultMapper.uniqueResult(q, Long.class);
+        Assert.fail("Expected " + NoResultException.class.getSimpleName() + " but not exception was thrown.");
+    }
 }
