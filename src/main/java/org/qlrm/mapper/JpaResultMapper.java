@@ -12,28 +12,42 @@ public class JpaResultMapper extends ResultMapper {
     public <T> List<T> list(Query q,
             Class<T> clazz) throws IllegalArgumentException {
         List<T> result = new ArrayList<T>();
-        List<Object[]> list = q.getResultList();
+		List<Object[]> list = postProcessResultList(q.getResultList());
 
         Constructor<?> ctor = null;
         // why finding a constructor for each item? The result set is the same!
         if (list != null && !list.isEmpty()) {
-            ctor = findConstructor(clazz, (Object[]) list.get(0));
+			ctor = findConstructor(clazz, list.get(0));
         }
-        for (Object obj : list) {
-            result.add((T) createInstance(ctor, (Object[]) obj));
+		for (Object[] obj : list) {
+			result.add((T) createInstance(ctor, obj));
         }
         return result;
     }
 
+	private List<Object[]> postProcessResultList(List<?> rawResults) {
+		List<Object[]> result = new ArrayList<>();
+		for (Object rawResult : rawResults) {
+			result.add(postProcessSingleResult(rawResult));
+		}
+
+		return result;
+	}
+
+	private Object[] postProcessSingleResult(Object rawResult) {
+		return rawResult instanceof Object[] ? (Object[]) rawResult : new Object[] { rawResult };
+	}
+
     public <T> T uniqueResult(Query q,
             Class<T> clazz) {
-        Object rec = q.getSingleResult();
-        final Constructor<?> ctor = findConstructor(clazz, (Object[]) rec);
-        return createInstance(ctor, (Object[]) rec);
+		Object[] rec = postProcessSingleResult(q.getSingleResult());
+		Constructor<?> ctor = findConstructor(clazz, rec);
+
+		return createInstance(ctor, rec);
     }
 
     private Constructor<?> findConstructor(Class<?> clazz,
-            Object[] args) {
+ Object... args) {
         Constructor<?> ctor = null;
         final Constructor<?>[] ctors = clazz.getDeclaredConstructors();
 
