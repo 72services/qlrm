@@ -10,7 +10,7 @@ Read more: https://github.com/simasch/qlrm/blob/master/ConstructorResult.md
 - Support for multiple constructors
 - Definition of schema for code generation
 
-Thanks to Stefan Heimberg https://github.com/StefanHeimberg and Nicola Mazarese https://github.com/nicolaMaza for their contribution!
+Thanks to Stefan Heimberg https://github.com/StefanHeimberg, Nicola Mazarese https://github.com/nicolaMaza and Jan Mosig https://github.com/JanMosigItemis for their contribution!
 
 ##Maven Dependency
 QLRM is available in Maven Central
