@@ -32,19 +32,19 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h1>
-<a id="why" class="anchor" href="#why" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why?</h1>
+<a id="why" class="anchor" href="#why" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why?</h1>
 
 <p>In JPA there is no Constructor Expression for native SQL queries. QLRM fills the gap!</p>
 
 <p>And because the implementation was quite easy there is an implementation for JDBC resultsets as well.</p>
 
 <h3>
-<a id="but-what-about-jpa-21-and-the-constructorresult" class="anchor" href="#but-what-about-jpa-21-and-the-constructorresult" aria-hidden="true"><span class="octicon octicon-link"></span></a>But what about JPA 2.1 and the ConstructorResult?</h3>
+<a id="but-what-about-jpa-21-and-the-constructorresult" class="anchor" href="#but-what-about-jpa-21-and-the-constructorresult" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>But what about JPA 2.1 and the ConstructorResult?</h3>
 
 <p>Read more: <a href="https://github.com/simasch/qlrm/blob/master/ConstructorResult.md">https://github.com/simasch/qlrm/blob/master/ConstructorResult.md</a></p>
 
 <h3>
-<a id="qlrm-161-new-features" class="anchor" href="#qlrm-161-new-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>QLRM 1.6.1 New Features</h3>
+<a id="qlrm-161-new-features" class="anchor" href="#qlrm-161-new-features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>QLRM 1.6.1 New Features</h3>
 
 <ul>
 <li>Support for multiple constructors</li>
@@ -54,7 +54,7 @@
 <p>Thanks to Stefan Heimberg <a href="https://github.com/StefanHeimberg">https://github.com/StefanHeimberg</a> and Nicola Mazarese <a href="https://github.com/nicolaMaza">https://github.com/nicolaMaza</a> for their contribution!</p>
 
 <h2>
-<a id="maven-dependency" class="anchor" href="#maven-dependency" aria-hidden="true"><span class="octicon octicon-link"></span></a>Maven Dependency</h2>
+<a id="maven-dependency" class="anchor" href="#maven-dependency" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Maven Dependency</h2>
 
 <p>QLRM is available in Maven Central</p>
 
@@ -65,7 +65,7 @@
 &lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
 
 <h2>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
 
 <p>Usage is quite forward but be aware of:</p>
 
@@ -75,52 +75,52 @@
 </ul>
 
 <h3>
-<a id="jpa-native-query" class="anchor" href="#jpa-native-query" aria-hidden="true"><span class="octicon octicon-link"></span></a>JPA Native Query</h3>
+<a id="jpa-native-query" class="anchor" href="#jpa-native-query" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>JPA Native Query</h3>
 
 <h4>
-<a id="list" class="anchor" href="#list" aria-hidden="true"><span class="octicon octicon-link"></span></a>List</h4>
+<a id="list" class="anchor" href="#list" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>List</h4>
 
 <div class="highlight highlight-source-java"><pre><span class="pl-smi">Query</span> q <span class="pl-k">=</span> em<span class="pl-k">.</span>createNativeQuery(<span class="pl-s"><span class="pl-pds">"</span>SELECT ID, NAME FROM EMPLOYEE<span class="pl-pds">"</span></span>);
 <span class="pl-k">List&lt;<span class="pl-smi">EmployeeTO</span>&gt;</span> list <span class="pl-k">=</span> jpaResultMapper<span class="pl-k">.</span>list(q, <span class="pl-smi">EmployeeTO</span><span class="pl-k">.</span>class);</pre></div>
 
 <h4>
-<a id="unique-result" class="anchor" href="#unique-result" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unique Result</h4>
+<a id="unique-result" class="anchor" href="#unique-result" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Unique Result</h4>
 
 <div class="highlight highlight-source-java"><pre><span class="pl-smi">Query</span> q <span class="pl-k">=</span> em<span class="pl-k">.</span>createNativeQuery(<span class="pl-s"><span class="pl-pds">"</span>SELECT ID, NAME FROM EMPLOYEE WHERE ID = 1<span class="pl-pds">"</span></span>);
 <span class="pl-smi">EmployeeTO</span> to <span class="pl-k">=</span> jpaResultMapper<span class="pl-k">.</span>uniqueResult(q, <span class="pl-smi">EmployeeTO</span><span class="pl-k">.</span>class);</pre></div>
 
 <h3>
-<a id="jpql" class="anchor" href="#jpql" aria-hidden="true"><span class="octicon octicon-link"></span></a>JPQL</h3>
+<a id="jpql" class="anchor" href="#jpql" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>JPQL</h3>
 
 <h4>
-<a id="list-1" class="anchor" href="#list-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>List</h4>
+<a id="list-1" class="anchor" href="#list-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>List</h4>
 
 <div class="highlight highlight-source-java"><pre><span class="pl-smi">Query</span> q <span class="pl-k">=</span> em<span class="pl-k">.</span>createQuery(<span class="pl-s"><span class="pl-pds">"</span>SELECT e.id, e.name FROM Employee e<span class="pl-pds">"</span></span>);
 <span class="pl-k">List&lt;<span class="pl-smi">EmployeeTO</span>&gt;</span> list <span class="pl-k">=</span> jpaResultMapper<span class="pl-k">.</span>list(q, <span class="pl-smi">EmployeeTO</span><span class="pl-k">.</span>class);</pre></div>
 
 <h4>
-<a id="unique-result-1" class="anchor" href="#unique-result-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unique Result</h4>
+<a id="unique-result-1" class="anchor" href="#unique-result-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Unique Result</h4>
 
 <div class="highlight highlight-source-java"><pre><span class="pl-smi">Query</span> q <span class="pl-k">=</span> em<span class="pl-k">.</span>createNativeQuery(<span class="pl-s"><span class="pl-pds">"</span>SELECT e.id, e.name FROM Employee e WHERE e.id = 1<span class="pl-pds">"</span></span>);
 <span class="pl-smi">EmployeeTO</span> to <span class="pl-k">=</span> jpaResultMapper<span class="pl-k">.</span>uniqueResult(q, <span class="pl-smi">EmployeeTO</span><span class="pl-k">.</span>class);</pre></div>
 
 <h3>
-<a id="jdbc-sql" class="anchor" href="#jdbc-sql" aria-hidden="true"><span class="octicon octicon-link"></span></a>JDBC SQL</h3>
+<a id="jdbc-sql" class="anchor" href="#jdbc-sql" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>JDBC SQL</h3>
 
 <h4>
-<a id="list-2" class="anchor" href="#list-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>List</h4>
+<a id="list-2" class="anchor" href="#list-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>List</h4>
 
 <div class="highlight highlight-source-java"><pre>stmt<span class="pl-k">.</span>execute(<span class="pl-s"><span class="pl-pds">"</span>SELECT ID, NAME FROM EMPLOYEE<span class="pl-pds">"</span></span>);
 <span class="pl-k">List&lt;<span class="pl-smi">EmployeeTO</span>&gt;</span> list <span class="pl-k">=</span> jdbcResultMapper<span class="pl-k">.</span>list(stmt<span class="pl-k">.</span>getResultSet(), <span class="pl-smi">EmployeeTO</span><span class="pl-k">.</span>class);</pre></div>
 
 <h4>
-<a id="unique-result-2" class="anchor" href="#unique-result-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unique Result</h4>
+<a id="unique-result-2" class="anchor" href="#unique-result-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Unique Result</h4>
 
 <div class="highlight highlight-source-java"><pre><span class="pl-k">boolean</span> ok <span class="pl-k">=</span> stmt<span class="pl-k">.</span>execute(<span class="pl-s"><span class="pl-pds">"</span>SELECT ID, NAME FROM EMPLOYEE WHERE ID = 1<span class="pl-pds">"</span></span>);
 <span class="pl-smi">EmployeeTO</span> to <span class="pl-k">=</span> jdbcResultMapper<span class="pl-k">.</span>uniqueResult(stmt<span class="pl-k">.</span>getResultSet(), <span class="pl-smi">EmployeeTO</span><span class="pl-k">.</span>class);</pre></div>
 
 <h2>
-<a id="references" class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h2>
+<a id="references" class="anchor" href="#references" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>References</h2>
 
 <p>The QL Result Mapper is inspired by EclipseLink and Hibernate:</p>
 
@@ -130,12 +130,12 @@
 </ul>
 
 <h1>
-<a id="class-generator" class="anchor" href="#class-generator" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class Generator</h1>
+<a id="class-generator" class="anchor" href="#class-generator" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Class Generator</h1>
 
 <p>ClassGenerator is a simple utility to generate transfer objects from database tables.</p>
 
 <h2>
-<a id="usage-1" class="anchor" href="#usage-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+<a id="usage-1" class="anchor" href="#usage-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
 
 <p>The first parameter is the path where the source file should be generated to. The second is the package name, third a suffix.
 With the forth parameter you can define if the fields should be public or if the generator must generate getters. 
@@ -144,7 +144,7 @@ Then a database connection must be passed. And the last parameter is a vargargs 
 <div class="highlight highlight-source-java"><pre>classGenerator<span class="pl-k">.</span>generateFromTables(<span class="pl-s"><span class="pl-pds">"</span>src/test/java/<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>ch.simas.sqlresultmapper.to<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>TO<span class="pl-pds">"</span></span>, <span class="pl-c1">false</span>, con, <span class="pl-s"><span class="pl-pds">"</span>EMPLOYEE<span class="pl-pds">"</span></span>);</pre></div>
 
 <h1>
-<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h1>
 
 <p>SQL Result Mapper is open source and free software under Apache License, Version 2:</p>
 
