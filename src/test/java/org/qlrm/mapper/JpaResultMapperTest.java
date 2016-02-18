@@ -12,30 +12,28 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.qlrm.model.Employee;
 import org.qlrm.to.EmployeeTO;
 
 public class JpaResultMapperTest {
 
-	private static EntityManager em;
-	private static JpaResultMapper jpaResultMapper = new JpaResultMapper();
-	private static int employeeId;
-	private static String emplyoeeName;
+	private EntityManager em;
+	private JpaResultMapper jpaResultMapper = new JpaResultMapper();
+	private int employeeId;
+	private String emplyoeeName;
 
-	@BeforeClass
-	public static void init() throws ClassNotFoundException, SQLException, FileNotFoundException {
+	@Before
+	public void init() throws ClassNotFoundException, SQLException, FileNotFoundException {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("srm");
 		em = emf.createEntityManager();
-		EntityTransaction trx = em.getTransaction();
-		trx.begin();
-		Employee e = new Employee();
-		e.setName("Peter Muster");
-		em.persist(e);
-		trx.commit();
-		employeeId = e.getId();
-		emplyoeeName = e.getName();
+		removeAllEmployees();
+		Employee employee = new Employee();
+		employee.setName("Peter Muster");
+		storeEmployee(employee);
+		employeeId = employee.getId();
+		emplyoeeName = employee.getName();
 
 		// FIXME stefanheimberg: deaktiviert weil ohne generierte TO Objekte
 		// kompiliert dieser Test auch nicht.
@@ -92,7 +90,9 @@ public class JpaResultMapperTest {
 
 	@Test
 	public void uniqueResultWithSql() {
-		Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE WHERE ID = 1");
+		Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE WHERE ID = ?");
+		q.setParameter(1, employeeId);
+
 		EmployeeTO to = jpaResultMapper.uniqueResult(q, EmployeeTO.class);
 
 		Assert.assertNotNull(to);
@@ -101,7 +101,8 @@ public class JpaResultMapperTest {
 
 	@Test
 	public void uniqueResultWithJpqlWhenSingleRow() {
-		Query q = em.createNativeQuery("SELECT e.id, e.name FROM Employee e WHERE e.id = 1");
+		Query q = em.createNativeQuery("SELECT e.id, e.name FROM Employee e WHERE e.id = ?");
+		q.setParameter(1, employeeId);
 		EmployeeTO to = jpaResultMapper.uniqueResult(q, EmployeeTO.class);
 
 		Assert.assertNotNull(to);
@@ -114,7 +115,7 @@ public class JpaResultMapperTest {
 		Long result = jpaResultMapper.uniqueResult(q, Long.class);
 
 		Assert.assertNotNull(result);
-		Assert.assertEquals(employeeId, result.longValue());
+		Assert.assertEquals(1, result.longValue());
 	}
 
 	@Test(expected = NoResultException.class)
@@ -143,5 +144,42 @@ public class JpaResultMapperTest {
 		Assert.assertNotNull(result);
 		Assert.assertEquals(1, result.size());
 		Assert.assertEquals(emplyoeeName, result.get(0));
+	}
+
+	@Test
+	public void testNullResultColumnRaisesNPE() {
+		Employee employeeWithNoName = new Employee();
+		storeEmployee(employeeWithNoName);
+		Query q = em.createQuery("SELECT e.name FROM Employee e WHERE e.id=?1");
+		q.setParameter(1, employeeWithNoName.getId());
+
+		try {
+			jpaResultMapper.list(q, String.class);
+			Assert.fail("Expected exception has not been thrown.");
+		} catch (RuntimeException e) {
+			Assert.assertEquals(NullPointerException.class, e.getCause().getClass());
+		}
+	}
+
+	/*
+	 * ##############
+	 * 
+	 * private helper
+	 * 
+	 * ##############
+	 */
+	private void storeEmployee(Employee employee) {
+		EntityTransaction trx = em.getTransaction();
+		trx.begin();
+		em.persist(employee);
+		trx.commit();
+	}
+
+	private void removeAllEmployees() {
+		EntityTransaction trx = em.getTransaction();
+		trx.begin();
+		Query q = em.createQuery("DELETE FROM Employee");
+		q.executeUpdate();
+		trx.commit();
 	}
 }
