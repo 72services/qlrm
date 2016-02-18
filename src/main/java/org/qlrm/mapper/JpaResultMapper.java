@@ -79,9 +79,11 @@ public class JpaResultMapper extends ResultMapper {
 					continue NEXT_CONSTRUCTOR;
 				}
 				for (int i = 0; i < parameterTypes.length; i++) {
-					Class<?> argType = convertToBoxTypeIfPrimitive(args[i].getClass());
-					if (args[i] != null && !parameterTypes[i].isAssignableFrom(argType)) {
-						continue NEXT_CONSTRUCTOR;
+					if (args[i] != null) {
+						Class<?> argType = convertToBoxTypeIfPrimitive(args[i].getClass());
+						if (!parameterTypes[i].isAssignableFrom(argType)) {
+							continue NEXT_CONSTRUCTOR;
+						}
 					}
 				}
 				result = ctor;
