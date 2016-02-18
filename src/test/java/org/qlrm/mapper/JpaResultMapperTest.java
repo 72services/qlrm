@@ -22,6 +22,7 @@ public class JpaResultMapperTest {
 	private static EntityManager em;
 	private static JpaResultMapper jpaResultMapper = new JpaResultMapper();
 	private static int employeeId;
+	private static String emplyoeeName;
 
 	@BeforeClass
 	public static void init() throws ClassNotFoundException, SQLException, FileNotFoundException {
@@ -34,6 +35,7 @@ public class JpaResultMapperTest {
 		em.persist(e);
 		trx.commit();
 		employeeId = e.getId();
+		emplyoeeName = e.getName();
 
 		// FIXME stefanheimberg: deaktiviert weil ohne generierte TO Objekte
 		// kompiliert dieser Test auch nicht.
@@ -70,11 +72,11 @@ public class JpaResultMapperTest {
 	@Test
 	public void listWithJpqlWhenUniqueResult() {
 		Query q = em.createQuery("SELECT e.id FROM Employee e");
-		List<Long> list = jpaResultMapper.list(q, Long.class);
+		List<Integer> list = jpaResultMapper.list(q, Integer.class);
 
 		Assert.assertNotNull(list);
 		Assert.assertEquals(1, list.size());
-		Assert.assertEquals(employeeId, list.get(0).longValue());
+		Assert.assertEquals(employeeId, list.get(0).intValue());
 	}
 
 	@Test
@@ -122,5 +124,24 @@ public class JpaResultMapperTest {
 
 		jpaResultMapper.uniqueResult(q, Long.class);
 		Assert.fail("Expected " + NoResultException.class.getSimpleName() + " but not exception was thrown.");
+	}
+
+	/**
+	 * Tests if the constructor search algorithm returns the correct
+	 * constructor.
+	 * There has been a bug where the algorithm just returned the first
+	 * constructor (if multiple constructors where available) who's argument
+	 * count did match the result row column count.
+	 */
+	@Test
+	public void testWhenTargetTypeHasMultipleConstructorsWithSameArgumentCount() {
+		Query q = em.createQuery("SELECT e.name FROM Employee e WHERE e.id=?1");
+		q.setParameter(1, employeeId);
+
+		List<String> result = jpaResultMapper.list(q, String.class);
+
+		Assert.assertNotNull(result);
+		Assert.assertEquals(1, result.size());
+		Assert.assertEquals(emplyoeeName, result.get(0));
 	}
 }
