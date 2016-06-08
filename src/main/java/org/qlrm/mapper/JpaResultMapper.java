@@ -93,7 +93,8 @@ public class JpaResultMapper extends ResultMapper {
 		if (null == result) {
 			StringBuilder sb = new StringBuilder("No constructor taking:\n");
 			for (Object object : args) {
-				sb.append("\t").append(object.getClass().getName()).append("\n");
+				if(object!=null)
+					sb.append("\t").append(object.getClass().getName()).append("\n");
 			}
 			throw new RuntimeException(sb.toString());
 		}
