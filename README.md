@@ -6,11 +6,17 @@ And because the implementation was quite easy there is an implementation for JDB
 ### But what about JPA 2.1 and the ConstructorResult?
 Read more: https://github.com/simasch/qlrm/blob/master/ConstructorResult.md
 
+### QLRM 1.6.4
+- Contains fixes from Jan Mosigs pull request https://github.com/simasch/qlrm/pull/12
+
+### QLRM 1.6.3 Bugfix
+- https://github.com/simasch/qlrm/issues/9 thanks to Jan Mosig for the fix
+
 ### QLRM 1.6.1 New Features
 - Support for multiple constructors
 - Definition of schema for code generation
 
-Thanks to Stefan Heimberg https://github.com/StefanHeimberg and Nicola Mazarese https://github.com/nicolaMaza for their contribution!
+Thanks to Stefan Heimberg https://github.com/StefanHeimberg, Nicola Mazarese https://github.com/nicolaMaza and Jan Mosig https://github.com/JanMosigItemis for their contribution!
 
 ##Maven Dependency
 QLRM is available in Maven Central
@@ -19,7 +25,7 @@ QLRM is available in Maven Central
 <dependency>
     <groupId>ch.simas.qlrm</groupId>
     <artifactId>qlrm</artifactId>
-    <version>1.6.1</version>
+    <version>1.6.4</version>
 </dependency>
 ```
 
