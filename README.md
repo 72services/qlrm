@@ -6,6 +6,9 @@ And because the implementation was quite easy there is an implementation for JDB
 ### But what about JPA 2.1 and the ConstructorResult?
 Read more: https://github.com/simasch/qlrm/blob/master/ConstructorResult.md
 
+### QLRM 1.6.5
+- Fixes from Nicola Mazarese pull request https://github.com/simasch/qlrm/pull/14
+
 ### QLRM 1.6.4
 - Contains fixes from Jan Mosigs pull request https://github.com/simasch/qlrm/pull/12
 
@@ -25,7 +28,7 @@ QLRM is available in Maven Central
 <dependency>
     <groupId>ch.simas.qlrm</groupId>
     <artifactId>qlrm</artifactId>
-    <version>1.6.4</version>
+    <version>1.6.5</version>
 </dependency>
 ```
 
