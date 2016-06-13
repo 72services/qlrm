@@ -12,7 +12,8 @@ public abstract class ResultMapper {
 		} catch (IllegalArgumentException e) {
 			StringBuilder sb = new StringBuilder("no constructor taking:\n");
 			for (Object object : args) {
-				sb.append("\t").append(object.getClass().getName()).append("\n");
+				if(object!=null)
+					sb.append("\t").append(object.getClass().getName()).append("\n");
 			}
 			throw new RuntimeException(sb.toString(), e);
 		} catch (InstantiationException | IllegalAccessException e) {
