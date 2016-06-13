@@ -21,14 +21,17 @@ public class JpaResultMapper extends ResultMapper {
 		PRIMITIVE_TO_BOX_TYPE_MAP.put(float.class, Float.class);
 		PRIMITIVE_TO_BOX_TYPE_MAP.put(double.class, Double.class);
 	}
+	
+
 
 	@SuppressWarnings("unchecked")
-	public <T> List<T> list(Query q, Class<T> clazz) throws IllegalArgumentException {
+	public <T> List<T> list(Query q, Class<T> clazz)
+			throws IllegalArgumentException {
 		List<T> result = new ArrayList<T>();
+
 		List<Object[]> list = postProcessResultList(q.getResultList());
 
 		Constructor<?> ctor = null;
-		// why finding a constructor for each item? The result set is the same!
 		if (list != null && !list.isEmpty()) {
 			ctor = findConstructor(clazz, list.get(0));
 		}
@@ -38,17 +41,24 @@ public class JpaResultMapper extends ResultMapper {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<Object[]> postProcessResultList(List<?> rawResults) {
 		List<Object[]> result = new ArrayList<>();
-		for (Object rawResult : rawResults) {
-			result.add(postProcessSingleResult(rawResult));
+
+		if (rawResults.size() == 1) {
+			for (Object rawResult : rawResults) {
+				result.add(postProcessSingleResult(rawResult));
+			}
+		} else {
+			result = (List<Object[]>) rawResults;
 		}
 
 		return result;
 	}
 
 	private Object[] postProcessSingleResult(Object rawResult) {
-		return rawResult instanceof Object[] ? (Object[]) rawResult : new Object[] { rawResult };
+		return rawResult instanceof Object[] ? (Object[]) rawResult
+				: new Object[] { rawResult };
 	}
 
 	public <T> T uniqueResult(Query q, Class<T> clazz) {
@@ -63,7 +73,8 @@ public class JpaResultMapper extends ResultMapper {
 		final Constructor<?>[] ctors = clazz.getDeclaredConstructors();
 
 		// More stable check
-		if (ctors.length == 1 && ctors[0].getParameterTypes().length == args.length) {
+		if (ctors.length == 1
+				&& ctors[0].getParameterTypes().length == args.length) {
 			// INFO stefanheimberg: wenn nur ein konstruktor, dann diesen
 			// verwenden
 			result = ctors[0];
@@ -73,14 +84,16 @@ public class JpaResultMapper extends ResultMapper {
 			// korrekten signatur verwenden
 
 			NEXT_CONSTRUCTOR: for (Constructor<?> ctor : ctors) {
-				final Class<?>[] parameterTypes = postProcessConstructorParameterTypes(ctor.getParameterTypes());
+				final Class<?>[] parameterTypes = postProcessConstructorParameterTypes(ctor
+						.getParameterTypes());
 				if (parameterTypes.length != args.length) {
 					// INFO stefanheimberg: anzahl parameter stimmt nicht
 					continue NEXT_CONSTRUCTOR;
 				}
 				for (int i = 0; i < parameterTypes.length; i++) {
 					if (args[i] != null) {
-						Class<?> argType = convertToBoxTypeIfPrimitive(args[i].getClass());
+						Class<?> argType = convertToBoxTypeIfPrimitive(args[i]
+								.getClass());
 						if (!parameterTypes[i].isAssignableFrom(argType)) {
 							continue NEXT_CONSTRUCTOR;
 						}
@@ -93,8 +106,9 @@ public class JpaResultMapper extends ResultMapper {
 		if (null == result) {
 			StringBuilder sb = new StringBuilder("No constructor taking:\n");
 			for (Object object : args) {
-				if(object!=null)
-					sb.append("\t").append(object.getClass().getName()).append("\n");
+				if (object != null)
+					sb.append("\t").append(object.getClass().getName())
+							.append("\n");
 			}
 			throw new RuntimeException(sb.toString());
 		}
@@ -104,8 +118,8 @@ public class JpaResultMapper extends ResultMapper {
 	/**
 	 * <p>
 	 * According to the JLS primitive types are not assignable to their box type
-	 * counterparts.
-	 * E. g. int.class.isAssignableFrom(Integer.class) returns false.
+	 * counterparts. E. g. int.class.isAssignableFrom(Integer.class) returns
+	 * false.
 	 * </p>
 	 * <p>
 	 * In order to make the isAssignable check in findConstructors work with
@@ -113,7 +127,8 @@ public class JpaResultMapper extends ResultMapper {
 	 * constructor argument types to their box type counterparts.
 	 * </p>
 	 */
-	private Class<?>[] postProcessConstructorParameterTypes(Class<?>[] rawParameterTypes) {
+	private Class<?>[] postProcessConstructorParameterTypes(
+			Class<?>[] rawParameterTypes) {
 		Class<?>[] result = new Class<?>[rawParameterTypes.length];
 		for (int i = 0; i < rawParameterTypes.length; i++) {
 			Class<?> currentType = rawParameterTypes[i];
@@ -129,6 +144,7 @@ public class JpaResultMapper extends ResultMapper {
 	 *         provided value was not a primitive type).
 	 */
 	private Class<?> convertToBoxTypeIfPrimitive(Class<?> primitiveType) {
-		return PRIMITIVE_TO_BOX_TYPE_MAP.getOrDefault(primitiveType, primitiveType);
+		return PRIMITIVE_TO_BOX_TYPE_MAP.getOrDefault(primitiveType,
+				primitiveType);
 	}
 }
