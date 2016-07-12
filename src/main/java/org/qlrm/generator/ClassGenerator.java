@@ -65,9 +65,13 @@ public class ClassGenerator {
         outputStream.println("import java.sql.Time;");
         outputStream.println("import java.sql.Timestamp;");
         outputStream.println("import java.math.BigDecimal;");
+        outputStream.println("import java.math.BigInteger;");
         outputStream.println("import java.sql.Blob;");
         outputStream.println("\n");
         outputStream.println("public class " + className + " implements Serializable {\n");
+        
+        outputStream.println("\n");
+        outputStream.println("  private static final long serialVersionUID = 1L;");
     }
 
     private String createFileName(String path, String pkg, String className) {
@@ -123,7 +127,7 @@ public class ClassGenerator {
                 typeString = "byte";
                 break;
             case Types.BIGINT:
-                typeString = "Long";
+                typeString = "BigInteger";
                 break;
             case Types.INTEGER:
                 typeString = "Integer";
