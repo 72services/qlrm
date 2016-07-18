@@ -7,6 +7,9 @@ And because the implementation was quite easy there is an implementation for JDB
 Read more: https://github.com/simasch/qlrm/blob/master/ConstructorResult.md
 
 ### QLRM 1.6.8
+- BigInteger Support for class generator by Nicola Mazarese: https://github.com/simasch/qlrm/pull/15
+
+### QLRM 1.6.8
 - Switched Java version back to 1.7. Sorry for any inconvenience! 
 
 ### QLRM 1.6.6
@@ -31,7 +34,7 @@ QLRM is available in Maven Central
 <dependency>
     <groupId>ch.simas.qlrm</groupId>
     <artifactId>qlrm</artifactId>
-    <version>1.6.8</version>
+    <version>1.6.9</version>
 </dependency>
 ```
 
