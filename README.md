@@ -6,7 +6,7 @@ And because the implementation was quite easy there is an implementation for JDB
 ### But what about JPA 2.1 and the ConstructorResult?
 Read more: https://github.com/simasch/qlrm/blob/master/ConstructorResult.md
 
-### QLRM 1.6.8
+### QLRM 1.6.9
 - BigInteger Support for class generator by Nicola Mazarese: https://github.com/simasch/qlrm/pull/15
 
 ### QLRM 1.6.8
