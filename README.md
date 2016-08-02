@@ -36,8 +36,8 @@ JpaQueryExecutor queryExecutor = new JpaQueryExecutor();
 List<EmployeeTO> list = queryExecutor.executeSelect(em, EmployeeTO.class, "select_with_one_param.sql", 1);
 ```
 
-##Usage
-Usage is quite forward but be aware of:
+##ResultMapper 
+The usage is quite forward but be aware of:
 - The Constructor must have the same number of arguments as the result of the SQL query
 - The result types must match the constructor arguments types
 
