@@ -19,7 +19,9 @@ QLRM is available in Maven Central
 
 ##NEW in 1.7.0: QueryExecutors
 Sometimes it's cleaner to move the SQL statements to a file but how to execute these statements?
+
 QueryExecutors to the rescue! 
+
 There is an implemenation that takes a JDBC connection and one using the JPA EntityManager.
 
 ###JDBC
