@@ -131,6 +131,6 @@ Special thanks for their contribution to
 - Jan Mosig https://github.com/JanMosigItemis 
 
 #License
-SQL Result Mapper is open source and free software under Apache License, Version 2:
+QLRM is open source and free software under Apache License, Version 2:
 
 http://www.apache.org/licenses/LICENSE-2.0.html
