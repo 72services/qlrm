@@ -71,22 +71,16 @@ public class JpaResultMapper extends ResultMapper {
         final Constructor<?>[] ctors = clazz.getDeclaredConstructors();
 
         // More stable check
-        if (ctors.length == 1
-                && ctors[0].getParameterTypes().length == args.length) {
-            // INFO stefanheimberg: wenn nur ein konstruktor, dann diesen
-            // verwenden
+        if (ctors.length == 1 && ctors[0].getParameterTypes().length == args.length) {
+            // If there is only one constructor we take that
             result = ctors[0];
         }
         if (ctors.length > 1) {
-            // INFO stefanheimberg: wenn mehrere konstruktor, dann den mit der
-            // korrekten signatur verwenden
-
             NEXT_CONSTRUCTOR:
             for (Constructor<?> ctor : ctors) {
                 final Class<?>[] parameterTypes = postProcessConstructorParameterTypes(ctor
                         .getParameterTypes());
                 if (parameterTypes.length != args.length) {
-                    // INFO stefanheimberg: anzahl parameter stimmt nicht
                     continue NEXT_CONSTRUCTOR;
                 }
                 for (int i = 0; i < parameterTypes.length; i++) {
