@@ -1,4 +1,4 @@
-#Why?
+# Why?
 In JPA there is no Constructor Expression for native SQL queries. QLRM fills the gap!
 
 And because the implementation was quite easy there is an implementation for JDBC resultsets as well.
