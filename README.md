@@ -101,6 +101,9 @@ classGenerator.generateFromTables("src/test/java/", "ch.simas.sqlresultmapper.to
 
 ## Release Notes
 
+### QLRM 1.7.1
+- Fixed https://github.com/simasch/qlrm/pull/16
+
 ### QLRM 1.7.0
 - Added JpaQueryExecutor and JdbcQueryExecutor
 
