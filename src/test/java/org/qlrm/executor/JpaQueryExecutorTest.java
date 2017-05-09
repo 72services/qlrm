@@ -1,11 +1,12 @@
 package org.qlrm.executor;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.qlrm.test.JpaBaseTest;
 import org.qlrm.to.EmployeeTO;
+import org.qlrm.to.SingleColumnTO;
+
+import java.util.List;
 
 public class JpaQueryExecutorTest extends JpaBaseTest {
 
@@ -41,6 +42,18 @@ public class JpaQueryExecutorTest extends JpaBaseTest {
 
         Assert.assertNotNull(list);
         for (EmployeeTO rec : list) {
+            System.out.println(rec);
+        }
+    }
+
+    @Test
+    public void selectOnlyOneColumn() {
+        JpaQueryExecutor queryExecutor = new JpaQueryExecutor();
+
+        List<SingleColumnTO> list = queryExecutor.executeSelect(em, SingleColumnTO.class, "select_with_one_column.sql");
+
+        Assert.assertFalse(list.isEmpty());
+        for (SingleColumnTO rec : list) {
             System.out.println(rec);
         }
     }
