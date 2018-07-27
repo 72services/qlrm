@@ -9,15 +9,17 @@ Read more: https://github.com/simasch/qlrm/blob/master/ConstructorResult.md
 ## Maven Dependency
 QLRM is available in Maven Central
 
+**Important Notice:** The groupId has changed from ```ch.simas.qlrm``` to ```org.qlrm```
+
 ```xml
 <dependency>
-    <groupId>ch.simas.qlrm</groupId>
+    <groupId>org.qlrm</groupId>
     <artifactId>qlrm</artifactId>
-    <version>1.7.1</version>
+    <version>2.0.2</version>
 </dependency>
 ```
 
-## NEW in 1.7.0: QueryExecutors
+## NEW from 1.7.0: QueryExecutors
 Sometimes it's cleaner to move the SQL statements to a file but how to execute these statements?
 
 QueryExecutors to the rescue! 
