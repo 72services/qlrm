@@ -131,9 +131,10 @@ classGenerator.generateFromTables("src/test/java/", "ch.simas.sqlresultmapper.to
 ## Contributors
 
 Special thanks for their contribution to
-- Stefan Heimberg https://github.com/StefanHeimberg
-- Nicola Mazarese https://github.com/nicolaMaza 
 - Jan Mosig https://github.com/JanMosigItemis 
+- Stefan Heimberg https://github.com/StefanHeimberg
+- Matthias Begert https://github.com/begert
+- Nicola Mazarese https://github.com/nicolaMaza 
 
 # License
 QLRM is open source and free software under Apache License, Version 2:
