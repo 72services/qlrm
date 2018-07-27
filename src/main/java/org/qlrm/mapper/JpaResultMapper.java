@@ -75,16 +75,20 @@ public class JpaResultMapper extends ResultMapper {
             result = ctors[0];
         }
         if (ctors.length > 1) {
+            NEXT_CONSTRUCTOR:
             for (Constructor<?> ctor : ctors) {
                 final Class<?>[] parameterTypes = postProcessConstructorParameterTypes(ctor
                         .getParameterTypes());
-                if (parameterTypes.length == args.length) {
+                if (parameterTypes.length != args.length) {
+                    continue NEXT_CONSTRUCTOR;
+                }
+                else {
                     for (int i = 0; i < parameterTypes.length; i++) {
                         if (args[i] != null) {
                             Class<?> argType = convertToBoxTypeIfPrimitive(args[i]
                                     .getClass());
                             if (!parameterTypes[i].isAssignableFrom(argType)) {
-                                continue;
+                                continue NEXT_CONSTRUCTOR;
                             }
                         }
                     }
