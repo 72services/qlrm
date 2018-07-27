@@ -1,17 +1,20 @@
 package org.qlrm.executor;
 
-import java.sql.SQLException;
-import java.util.List;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import org.qlrm.test.JdbcBaseTest;
 import org.qlrm.to.EmployeeTO;
 
+import java.util.List;
+
 public class JdbcQueryExecutorTest extends JdbcBaseTest {
 
+    private static final Logger LOGGER = LogManager.getLogger(JdbcQueryExecutorTest.class);
+
     @Test
-    public void select() throws SQLException {
+    public void select() {
         JdbcQueryExecutor queryExecutor = new JdbcQueryExecutor();
 
         List<EmployeeTO> list = queryExecutor.executeSelect(con, EmployeeTO.class, "select.sql");
@@ -20,12 +23,12 @@ public class JdbcQueryExecutorTest extends JdbcBaseTest {
         Assert.assertTrue(list.size() > 0);
 
         for (EmployeeTO rec : list) {
-            System.out.println(rec);
+            LOGGER.debug(rec);
         }
     }
 
     @Test
-    public void selectWithOneParam() throws SQLException {
+    public void selectWithOneParam() {
         JdbcQueryExecutor queryExecutor = new JdbcQueryExecutor();
 
         List<EmployeeTO> list = queryExecutor.executeSelect(con, EmployeeTO.class, "select_with_one_param.sql", 1);
@@ -34,12 +37,12 @@ public class JdbcQueryExecutorTest extends JdbcBaseTest {
         Assert.assertTrue(list.size() > 0);
 
         for (EmployeeTO rec : list) {
-            System.out.println(rec);
+            LOGGER.debug(rec);
         }
     }
 
     @Test
-    public void selectWithTwoParams() throws SQLException {
+    public void selectWithTwoParams() {
         JdbcQueryExecutor queryExecutor = new JdbcQueryExecutor();
 
         List<EmployeeTO> list = queryExecutor.executeSelect(con, EmployeeTO.class, "select_with_two_params.sql", 1, "Peter Muster");
@@ -48,12 +51,12 @@ public class JdbcQueryExecutorTest extends JdbcBaseTest {
         Assert.assertTrue(list.size() > 0);
 
         for (EmployeeTO rec : list) {
-            System.out.println(rec);
+            LOGGER.debug(rec);
         }
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void wrongFilename() throws SQLException {
+    public void wrongFilename() {
         JdbcQueryExecutor queryExecutor = new JdbcQueryExecutor();
 
         List<EmployeeTO> list = queryExecutor.executeSelect(con, EmployeeTO.class, "xy.sql", 1, "Peter Muster");
@@ -62,7 +65,7 @@ public class JdbcQueryExecutorTest extends JdbcBaseTest {
         Assert.assertTrue(list.size() > 0);
 
         for (EmployeeTO rec : list) {
-            System.out.println(rec);
+            LOGGER.debug(rec);
         }
     }
 }

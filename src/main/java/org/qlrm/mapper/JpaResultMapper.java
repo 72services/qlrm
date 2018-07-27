@@ -1,18 +1,17 @@
 package org.qlrm.mapper;
 
+import javax.persistence.Query;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Query;
-
 public class JpaResultMapper extends ResultMapper {
 
     private static final Map<Class<?>, Class<?>> PRIMITIVE_TO_BOX_TYPE_MAP = new HashMap<>();
 
-    {
+    static {
         PRIMITIVE_TO_BOX_TYPE_MAP.put(int.class, Integer.class);
         PRIMITIVE_TO_BOX_TYPE_MAP.put(long.class, Long.class);
         PRIMITIVE_TO_BOX_TYPE_MAP.put(byte.class, Byte.class);
@@ -25,7 +24,7 @@ public class JpaResultMapper extends ResultMapper {
     @SuppressWarnings("unchecked")
     public <T> List<T> list(Query q, Class<T> clazz)
             throws IllegalArgumentException {
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
 
         List<Object[]> list = postProcessResultList(q.getResultList());
 
@@ -34,7 +33,7 @@ public class JpaResultMapper extends ResultMapper {
             ctor = findConstructor(clazz, list.get(0));
         }
         for (Object[] obj : list) {
-            result.add((T) createInstance(ctor, obj));
+            result.add(createInstance(ctor, obj));
         }
         return result;
     }
@@ -76,24 +75,22 @@ public class JpaResultMapper extends ResultMapper {
             result = ctors[0];
         }
         if (ctors.length > 1) {
-            NEXT_CONSTRUCTOR:
             for (Constructor<?> ctor : ctors) {
                 final Class<?>[] parameterTypes = postProcessConstructorParameterTypes(ctor
                         .getParameterTypes());
-                if (parameterTypes.length != args.length) {
-                    continue NEXT_CONSTRUCTOR;
-                }
-                for (int i = 0; i < parameterTypes.length; i++) {
-                    if (args[i] != null) {
-                        Class<?> argType = convertToBoxTypeIfPrimitive(args[i]
-                                .getClass());
-                        if (!parameterTypes[i].isAssignableFrom(argType)) {
-                            continue NEXT_CONSTRUCTOR;
+                if (parameterTypes.length == args.length) {
+                    for (int i = 0; i < parameterTypes.length; i++) {
+                        if (args[i] != null) {
+                            Class<?> argType = convertToBoxTypeIfPrimitive(args[i]
+                                    .getClass());
+                            if (!parameterTypes[i].isAssignableFrom(argType)) {
+                                continue;
+                            }
                         }
                     }
+                    result = ctor;
+                    break;
                 }
-                result = ctor;
-                break;
             }
         }
         if (null == result) {
@@ -138,10 +135,6 @@ public class JpaResultMapper extends ResultMapper {
      * value was not a primitive type).
      */
     private Class<?> convertToBoxTypeIfPrimitive(Class<?> primitiveType) {
-        if (PRIMITIVE_TO_BOX_TYPE_MAP.containsKey(primitiveType)) {
-            return PRIMITIVE_TO_BOX_TYPE_MAP.get(primitiveType);
-        } else {
-            return primitiveType;
-        }
+        return PRIMITIVE_TO_BOX_TYPE_MAP.getOrDefault(primitiveType, primitiveType);
     }
 }

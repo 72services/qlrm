@@ -3,32 +3,27 @@ package org.qlrm.generator;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Types;
+import java.sql.*;
 
 public class ClassGenerator {
 
     @Deprecated
     public void generateFromTables(final String path,
-            final String pkg,
-            final String suffix,
-            final boolean publicFields,
-            final Connection con,
-            final String... tables) throws SQLException, FileNotFoundException {
+                                   final String pkg,
+                                   final String suffix,
+                                   final boolean publicFields,
+                                   final Connection con,
+                                   final String... tables) throws SQLException, FileNotFoundException {
         generateFromTables(path, pkg, suffix, publicFields, null, con, tables);
     }
 
     public void generateFromTables(final String path,
-            final String pkg,
-            final String suffix,
-            final boolean publicFields,
-            final String schema,
-            final Connection con,
-            final String... tables) throws SQLException, FileNotFoundException {
+                                   final String pkg,
+                                   final String suffix,
+                                   final boolean publicFields,
+                                   final String schema,
+                                   final Connection con,
+                                   final String... tables) throws SQLException, FileNotFoundException {
         DatabaseMetaData metadata = con.getMetaData();
         for (String table : tables) {
             String className = generateClassName(table, suffix);
@@ -69,7 +64,7 @@ public class ClassGenerator {
         outputStream.println("import java.sql.Blob;");
         outputStream.println("\n");
         outputStream.println("public class " + className + " implements Serializable {\n");
-        
+
         outputStream.println("\n");
         outputStream.println("  private static final long serialVersionUID = 1L;");
     }
@@ -83,7 +78,7 @@ public class ClassGenerator {
     }
 
     private void createClassBody(ResultSet colResults, PrintWriter outputStream,
-            String className, boolean publicFields)
+                                 String className, boolean publicFields)
             throws SQLException {
         StringBuilder ctrArgs = new StringBuilder();
         StringBuilder ctrBody = new StringBuilder();
@@ -102,7 +97,7 @@ public class ClassGenerator {
     }
 
     private void createClassBody(ResultSetMetaData metaData, PrintWriter outputStream,
-            String className, boolean publicFields)
+                                 String className, boolean publicFields)
             throws SQLException {
         StringBuilder ctrArgs = new StringBuilder();
         StringBuilder ctrBody = new StringBuilder();
@@ -188,24 +183,24 @@ public class ClassGenerator {
         if (suffix == null) {
             suffix = "";
         }
-        return table.substring(0, 1).toUpperCase() + table.substring(1, table.length()).toLowerCase() + suffix;
+        return table.substring(0, 1).toUpperCase() + table.substring(1).toLowerCase() + suffix;
     }
 
     private void generateCtrAndGetters(int colType, PrintWriter outputStream,
-            boolean publicFields, String name, StringBuilder ctrArgs,
-            StringBuilder ctrBody, StringBuilder getters) {
+                                       boolean publicFields, String name, StringBuilder ctrArgs,
+                                       StringBuilder ctrBody, StringBuilder getters) {
         String type = sqlTypeToJavaTypeString(colType);
         outputStream.println(publicFields ? "  public " : "  private " + type + " " + name + ";");
         ctrArgs.append(type).append(" ").append(name);
         ctrBody.append("    this.").append(name).append(" = ").append(name).append(";\n");
         if (!publicFields) {
-            getters.append("  public ").append(type).append(" get").append(name.substring(0, 1).toUpperCase()).append(name.substring(1, name.length())).append("() {\n");
+            getters.append("  public ").append(type).append(" get").append(name.substring(0, 1).toUpperCase()).append(name.substring(1)).append("() {\n");
             getters.append("    return ").append(name).append(";\n }\n");
         }
     }
 
     private void writeCtrAndGetters(PrintWriter outputStream, String className,
-            StringBuilder ctrArgs, StringBuilder ctrBody, StringBuilder getters) {
+                                    StringBuilder ctrArgs, StringBuilder ctrBody, StringBuilder getters) {
         outputStream.println("\n");
         outputStream.println("  public " + className + " (" + ctrArgs.toString() + ") {\n");
         outputStream.println(ctrBody.toString());

@@ -1,15 +1,19 @@
 package org.qlrm.mapper;
 
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import org.qlrm.test.JdbcBaseTest;
 import org.qlrm.to.EmployeeTO;
 
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+
 public class JdbcResultMapperTest extends JdbcBaseTest {
+
+    private static final Logger LOGGER = LogManager.getLogger(JdbcResultMapperTest.class);
 
     private static final JdbcResultMapper jdbcResultMapper = new JdbcResultMapper();
 
@@ -24,7 +28,7 @@ public class JdbcResultMapperTest extends JdbcBaseTest {
         Assert.assertTrue(list.size() > 0);
 
         for (EmployeeTO rec : list) {
-            System.out.println(rec);
+            LOGGER.debug(rec);
         }
     }
 
@@ -37,6 +41,6 @@ public class JdbcResultMapperTest extends JdbcBaseTest {
         EmployeeTO to = jdbcResultMapper.uniqueResult(stmt.getResultSet(), EmployeeTO.class);
         Assert.assertNotNull(to);
 
-        System.out.println(to);
+        LOGGER.debug(to);
     }
 }

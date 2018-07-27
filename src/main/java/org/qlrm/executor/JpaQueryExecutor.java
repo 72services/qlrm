@@ -1,10 +1,11 @@
 package org.qlrm.executor;
 
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import org.qlrm.mapper.JpaResultMapper;
 import org.qlrm.util.FileUtil;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.List;
 
 public class JpaQueryExecutor {
 

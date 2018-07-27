@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 
 public class FileUtil {
 
@@ -17,8 +18,8 @@ public class FileUtil {
             final int bufferSize = 1024;
             final char[] buffer = new char[bufferSize];
             final StringBuilder out = new StringBuilder();
-            try (Reader reader = new InputStreamReader(inputStream, "UTF-8")) {
-                for (;;) {
+            try (Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
+                for (; ; ) {
                     int rsz = reader.read(buffer, 0, buffer.length);
                     if (rsz < 0) {
                         break;

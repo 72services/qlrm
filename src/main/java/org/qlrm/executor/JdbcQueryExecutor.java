@@ -1,12 +1,13 @@
 package org.qlrm.executor;
 
+import org.qlrm.mapper.JdbcResultMapper;
+import org.qlrm.util.FileUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import org.qlrm.mapper.JdbcResultMapper;
-import org.qlrm.util.FileUtil;
 
 public class JdbcQueryExecutor {
 

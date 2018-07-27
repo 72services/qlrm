@@ -1,18 +1,16 @@
 package org.qlrm.generator;
 
-import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
+import java.sql.*;
+
 public class ClassGeneratorTest {
+
+    private static final Logger LOGGER = LogManager.getLogger(ClassGeneratorTest.class);
 
     private static Connection con;
     private static ClassGenerator classGenerator = new ClassGenerator();
@@ -25,8 +23,8 @@ public class ClassGeneratorTest {
             Statement stmt = con.createStatement();
             stmt.executeUpdate("CREATE TABLE EMPLOYEE (ID INTEGER NOT NULL, NAME VARCHAR, PRIMARY KEY (ID))");
             stmt.close();
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(ClassGeneratorTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -36,8 +34,8 @@ public class ClassGeneratorTest {
     public void generateFromTables() {
         try {
             classGenerator.generateFromTables(System.getProperty("user.dir"), null, null, false, con, "EMPLOYEE");
-        } catch (SQLException | FileNotFoundException ex) {
-            Logger.getLogger(ClassGeneratorTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException | FileNotFoundException e) {
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -48,8 +46,8 @@ public class ClassGeneratorTest {
             ResultSet rs = stmt.executeQuery("SELECT NAME FROM EMPLOYEE");
             classGenerator.generateFromResultSet(System.getProperty("user.dir"), null, "EmployeeNameTO", false, rs);
             stmt.close();
-        } catch (SQLException | FileNotFoundException ex) {
-            Logger.getLogger(ClassGeneratorTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException | FileNotFoundException e) {
+            LOGGER.error(e.getMessage(), e);
         }
     }
 }

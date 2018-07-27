@@ -1,5 +1,7 @@
 package org.qlrm.executor;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import org.qlrm.test.JpaBaseTest;
@@ -10,6 +12,8 @@ import java.util.List;
 
 public class JpaQueryExecutorTest extends JpaBaseTest {
 
+    private static final Logger LOGGER = LogManager.getLogger(JpaQueryExecutorTest.class);
+
     @Test
     public void select() {
         JpaQueryExecutor queryExecutor = new JpaQueryExecutor();
@@ -18,7 +22,7 @@ public class JpaQueryExecutorTest extends JpaBaseTest {
 
         Assert.assertNotNull(list);
         for (EmployeeTO rec : list) {
-            System.out.println(rec);
+            LOGGER.debug(rec);
         }
     }
 
@@ -30,7 +34,7 @@ public class JpaQueryExecutorTest extends JpaBaseTest {
 
         Assert.assertNotNull(list);
         for (EmployeeTO rec : list) {
-            System.out.println(rec);
+            LOGGER.debug(rec);
         }
     }
 
@@ -42,7 +46,7 @@ public class JpaQueryExecutorTest extends JpaBaseTest {
 
         Assert.assertNotNull(list);
         for (EmployeeTO rec : list) {
-            System.out.println(rec);
+            LOGGER.debug(rec);
         }
     }
 
@@ -54,7 +58,7 @@ public class JpaQueryExecutorTest extends JpaBaseTest {
 
         Assert.assertFalse(list.isEmpty());
         for (SingleColumnTO rec : list) {
-            System.out.println(rec);
+            LOGGER.debug(rec);
         }
     }
 }
