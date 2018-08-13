@@ -1,0 +1,8 @@
+title: QLRM
+description: Query Language Result Mapper
+google_analytics: UA-39994335-1
+show_downloads: true
+theme: jekyll-theme-slate
+
+gems:
+  - jekyll-mentions
