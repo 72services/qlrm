@@ -27,6 +27,18 @@ public class JpaQueryExecutorTest extends JpaBaseTest {
     }
 
     @Test
+    public void selectWithPaging() {
+        JpaQueryExecutor queryExecutor = new JpaQueryExecutor();
+
+        List<EmployeeTO> list = queryExecutor.executeSelect(em, EmployeeTO.class, "select.sql", new PageRequest(0, 20));
+
+        Assert.assertNotNull(list);
+        for (EmployeeTO rec : list) {
+            LOGGER.debug(rec);
+        }
+    }
+
+    @Test
     public void selectWithOneParam() {
         JpaQueryExecutor queryExecutor = new JpaQueryExecutor();
 

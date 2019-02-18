@@ -21,6 +21,15 @@ public class JpaResultMapper extends ResultMapper {
         PRIMITIVE_TO_BOX_TYPE_MAP.put(double.class, Double.class);
     }
 
+    /**
+     * Returns a list of objects from a {@link javax.persistence.Query}
+     *
+     * @param q
+     * @param clazz
+     * @param <T>
+     * @return
+     * @throws IllegalArgumentException
+     */
     @SuppressWarnings("unchecked")
     public <T> List<T> list(Query q, Class<T> clazz)
             throws IllegalArgumentException {
@@ -37,6 +46,22 @@ public class JpaResultMapper extends ResultMapper {
         }
         return result;
     }
+
+    /**
+     * Returns on object from {@link javax.persistence.Query}
+     *
+     * @param q
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public <T> T uniqueResult(Query q, Class<T> clazz) {
+        Object[] rec = postProcessSingleResult(q.getSingleResult());
+        Constructor<?> ctor = findConstructor(clazz, rec);
+
+        return createInstance(ctor, rec);
+    }
+
 
     @SuppressWarnings("unchecked")
     private List<Object[]> postProcessResultList(List<?> rawResults) {
@@ -58,13 +83,6 @@ public class JpaResultMapper extends ResultMapper {
                 : new Object[]{rawResult};
     }
 
-    public <T> T uniqueResult(Query q, Class<T> clazz) {
-        Object[] rec = postProcessSingleResult(q.getSingleResult());
-        Constructor<?> ctor = findConstructor(clazz, rec);
-
-        return createInstance(ctor, rec);
-    }
-
     private Constructor<?> findConstructor(Class<?> clazz, Object... args) {
         Constructor<?> result = null;
         final Constructor<?>[] ctors = clazz.getDeclaredConstructors();
@@ -81,8 +99,7 @@ public class JpaResultMapper extends ResultMapper {
                         .getParameterTypes());
                 if (parameterTypes.length != args.length) {
                     continue NEXT_CONSTRUCTOR;
-                }
-                else {
+                } else {
                     for (int i = 0; i < parameterTypes.length; i++) {
                         if (args[i] != null) {
                             Class<?> argType = convertToBoxTypeIfPrimitive(args[i]

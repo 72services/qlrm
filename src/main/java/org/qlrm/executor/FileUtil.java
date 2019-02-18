@@ -1,4 +1,4 @@
-package org.qlrm.util;
+package org.qlrm.executor;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,9 +6,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 
-public class FileUtil {
+class FileUtil {
 
-    public static String getFileAsString(String filename) {
+    static String getFileAsString(String filename) {
         try {
             InputStream inputStream = FileUtil.class.getClassLoader().getResourceAsStream(filename);
             if (inputStream == null) {

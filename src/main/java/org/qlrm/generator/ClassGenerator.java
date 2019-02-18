@@ -17,6 +17,19 @@ public class ClassGenerator {
         generateFromTables(path, pkg, suffix, publicFields, null, con, tables);
     }
 
+    /**
+     * Generates a Java source file from a database table
+     *
+     * @param path
+     * @param pkg
+     * @param suffix
+     * @param publicFields
+     * @param schema
+     * @param con
+     * @param tables
+     * @throws SQLException
+     * @throws FileNotFoundException
+     */
     public void generateFromTables(final String path,
                                    final String pkg,
                                    final String suffix,
@@ -39,6 +52,17 @@ public class ClassGenerator {
         }
     }
 
+    /**
+     * Generates a Java source file from a result set
+     *
+     * @param path
+     * @param pkg
+     * @param className
+     * @param publicFields
+     * @param resultSet
+     * @throws SQLException
+     * @throws FileNotFoundException
+     */
     public void generateFromResultSet(String path, String pkg, String className, boolean publicFields, ResultSet resultSet)
             throws SQLException, FileNotFoundException {
         ResultSetMetaData metaData = resultSet.getMetaData();
