@@ -1,13 +1,13 @@
 package org.qlrm.executor;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import org.qlrm.test.JdbcBaseTest;
 import org.qlrm.to.EmployeeTO;
-
-import java.util.List;
 
 public class JdbcQueryExecutorTest extends JdbcBaseTest {
 
@@ -18,6 +18,20 @@ public class JdbcQueryExecutorTest extends JdbcBaseTest {
         JdbcQueryExecutor queryExecutor = new JdbcQueryExecutor();
 
         List<EmployeeTO> list = queryExecutor.executeSelect(con, EmployeeTO.class, "select.sql");
+
+        Assert.assertNotNull(list);
+        Assert.assertTrue(list.size() > 0);
+
+        for (EmployeeTO rec : list) {
+            LOGGER.debug(rec);
+        }
+    }
+
+    @Test
+    public void shouldEnsureDirectSqlApi() {
+        JdbcQueryExecutor queryExecutor = new JdbcQueryExecutor();
+
+        List<EmployeeTO> list = queryExecutor.executeSelect(con, "SELECT ID, NAME FROM EMPLOYEE", EmployeeTO.class);
 
         Assert.assertNotNull(list);
         Assert.assertTrue(list.size() > 0);
