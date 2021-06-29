@@ -18,7 +18,7 @@ public class JpaQueryExecutor {
      * @param filename    File containing the SQL select
      * @param pageRequest {@link PageRequest}
      * @param params      List of parameters
-     * @param <T>
+     * @param <T>         Type
      * @return List of objects
      */
     public <T> List<T> executeSelect(EntityManager em, Class<T> clazz, String filename, PageRequest pageRequest, Object... params) {
@@ -46,7 +46,7 @@ public class JpaQueryExecutor {
      * @param clazz    Type to return
      * @param filename File containing the SQL select
      * @param params   List of parameters
-     * @param <T>
+     * @param <T>      Type
      * @return List of objects
      */
     public <T> List<T> executeSelect(EntityManager em, Class<T> clazz, String filename, Object... params) {
