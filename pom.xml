@@ -95,6 +95,10 @@
                 <artifactId>gitflow-maven-plugin</artifactId>
                 <version>1.14.0</version>
                 <configuration>
+                    <verbose>true</verbose>
+                    <gitFlowConfig>
+                        <productionBranch>main</productionBranch>
+                    </gitFlowConfig>
                 </configuration>
             </plugin>
         </plugins>
