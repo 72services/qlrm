@@ -19,7 +19,7 @@ public class JdbcQueryExecutor {
      * @param clazz      Type to return
      * @param filename   File containing the SQL select
      * @param params     List of parameters
-     * @param <T>
+     * @param <T>        Type
      * @return List of objects
      */
     public <T> List<T> executeSelect(Connection connection, Class<T> clazz, String filename, Object... params) {
@@ -32,9 +32,9 @@ public class JdbcQueryExecutor {
      *
      * @param connection {@link java.sql.Connection}
      * @param clazz      Type to return
-     * @param filename   File containing the SQL select
+     * @param sqlString  SQL select
      * @param params     List of parameters
-     * @param <T>
+     * @param <T>        Type
      * @return List of objects
      */
     public <T> List<T> executeSelect(Connection connection, String sqlString, Class<T> clazz, Object... params) {
