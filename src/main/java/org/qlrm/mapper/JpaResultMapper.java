@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class JpaResultMapper extends ResultMapper {
 
@@ -24,15 +25,12 @@ public class JpaResultMapper extends ResultMapper {
     /**
      * Returns a list of objects from a {@link javax.persistence.Query}
      *
-     * @param q
-     * @param clazz
-     * @param <T>
-     * @return
-     * @throws IllegalArgumentException
+     * @param q     {@link Query}
+     * @param clazz {@link Class}
+     * @param <T>   Type
+     * @return List of objects
      */
-    @SuppressWarnings("unchecked")
-    public <T> List<T> list(Query q, Class<T> clazz)
-            throws IllegalArgumentException {
+    public <T> List<T> list(Query q, Class<T> clazz) {
         List<T> result = new ArrayList<>();
 
         List<Object[]> list = postProcessResultList(q.getResultList());
@@ -41,7 +39,7 @@ public class JpaResultMapper extends ResultMapper {
         if (list != null && !list.isEmpty()) {
             ctor = findConstructor(clazz, list.get(0));
         }
-        for (Object[] obj : list) {
+        for (Object[] obj : Objects.requireNonNull(list)) {
             result.add(createInstance(ctor, obj));
         }
         return result;
@@ -50,10 +48,10 @@ public class JpaResultMapper extends ResultMapper {
     /**
      * Returns on object from {@link javax.persistence.Query}
      *
-     * @param q
-     * @param clazz
-     * @param <T>
-     * @return
+     * @param q     {@link Query}
+     * @param clazz {@link Class}
+     * @param <T>   Type
+     * @return List of objects
      */
     public <T> T uniqueResult(Query q, Class<T> clazz) {
         Object[] rec = postProcessSingleResult(q.getSingleResult());
@@ -97,13 +95,10 @@ public class JpaResultMapper extends ResultMapper {
             for (Constructor<?> ctor : ctors) {
                 final Class<?>[] parameterTypes = postProcessConstructorParameterTypes(ctor
                         .getParameterTypes());
-                if (parameterTypes.length != args.length) {
-                    continue NEXT_CONSTRUCTOR;
-                } else {
+                if (parameterTypes.length == args.length) {
                     for (int i = 0; i < parameterTypes.length; i++) {
                         if (args[i] != null) {
-                            Class<?> argType = convertToBoxTypeIfPrimitive(args[i]
-                                    .getClass());
+                            Class<?> argType = convertToBoxTypeIfPrimitive(args[i].getClass());
                             if (!parameterTypes[i].isAssignableFrom(argType)) {
                                 continue NEXT_CONSTRUCTOR;
                             }

@@ -24,7 +24,7 @@ public class JdbcResultMapper extends ResultMapper {
 
         while (rs.next()) {
             Object[] objs = convertToObjects(rs, ctor);
-            result.add((T) createInstance(ctor, objs));
+            result.add(createInstance(ctor, objs));
         }
         return result;
     }

@@ -20,15 +20,13 @@ public class ClassGenerator {
     /**
      * Generates a Java source file from a database table
      *
-     * @param path
-     * @param pkg
-     * @param suffix
-     * @param publicFields
-     * @param schema
-     * @param con
-     * @param tables
-     * @throws SQLException
-     * @throws FileNotFoundException
+     * @param path         Path
+     * @param pkg          Package
+     * @param suffix       Suffix
+     * @param publicFields if fields are public
+     * @param schema       Schema
+     * @param con          Connection
+     * @param tables       Tables
      */
     public void generateFromTables(final String path,
                                    final String pkg,
@@ -55,13 +53,11 @@ public class ClassGenerator {
     /**
      * Generates a Java source file from a result set
      *
-     * @param path
-     * @param pkg
-     * @param className
-     * @param publicFields
-     * @param resultSet
-     * @throws SQLException
-     * @throws FileNotFoundException
+     * @param path         Path
+     * @param pkg          Package
+     * @param className    Class name
+     * @param publicFields if fields are public
+     * @param resultSet    {@link ResultSet}
      */
     public void generateFromResultSet(String path, String pkg, String className, boolean publicFields, ResultSet resultSet)
             throws SQLException, FileNotFoundException {
@@ -178,9 +174,6 @@ public class ClassGenerator {
                 break;
             case Types.BIT:
                 typeString = "boolean";
-                break;
-            case Types.OTHER:
-                typeString = "Object";
                 break;
             case Types.TIMESTAMP:
                 typeString = "Timestamp";

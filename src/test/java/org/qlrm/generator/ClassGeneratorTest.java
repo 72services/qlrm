@@ -13,7 +13,7 @@ public class ClassGeneratorTest {
     private static final Logger LOGGER = LogManager.getLogger(ClassGeneratorTest.class);
 
     private static Connection con;
-    private static ClassGenerator classGenerator = new ClassGenerator();
+    private static final ClassGenerator classGenerator = new ClassGenerator();
 
     @BeforeClass
     public static void setUpClass() {
