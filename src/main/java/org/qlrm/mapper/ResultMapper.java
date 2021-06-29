@@ -6,9 +6,9 @@ import java.lang.reflect.InvocationTargetException;
 public abstract class ResultMapper {
 
     @SuppressWarnings(value = "unchecked")
-    protected <T> T createInstance(Constructor<?> ctor, Object[] args) {
+    protected <T> T createInstance(Constructor<?> constructor, Object[] args) {
         try {
-            return (T) ctor.newInstance(args);
+            return (T) constructor.newInstance(args);
         } catch (IllegalArgumentException e) {
             StringBuilder sb = new StringBuilder("no constructor taking:\n");
             for (Object object : args) {

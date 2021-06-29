@@ -11,19 +11,17 @@ public class JdbcResultMapper extends ResultMapper {
     /**
      * Returns list of objects from a {@link java.sql.ResultSet}
      *
-     * @param rs
-     * @param clazz
-     * @param <T>
-     * @return
-     * @throws SQLException
+     * @param resultSet    {@link ResultSet}
+     * @param clazz {@link Class}
+     * @param <T>   Type
+     * @return List of objects
      */
-    @SuppressWarnings("unchecked")
-    public <T> List<T> list(ResultSet rs, Class<T> clazz) throws SQLException {
+    public <T> List<T> list(ResultSet resultSet, Class<T> clazz) throws SQLException {
         List<T> result = new ArrayList<>();
-        Constructor<?> ctor = getConstructor(rs, clazz);
+        Constructor<?> ctor = getConstructor(resultSet, clazz);
 
-        while (rs.next()) {
-            Object[] objs = convertToObjects(rs, ctor);
+        while (resultSet.next()) {
+            Object[] objs = convertToObjects(resultSet, ctor);
             result.add(createInstance(ctor, objs));
         }
         return result;
@@ -32,17 +30,16 @@ public class JdbcResultMapper extends ResultMapper {
     /**
      * Returns one object from a {@link java.sql.ResultSet}
      *
-     * @param rs
-     * @param clazz
-     * @param <T>
-     * @return
-     * @throws SQLException
+     * @param resultSet    {@link ResultSet}
+     * @param clazz {@link Class}
+     * @param <T>   Type
+     * @return List of objects
      */
     @SuppressWarnings("unchecked")
-    public <T> T uniqueResult(ResultSet rs, Class<T> clazz) throws SQLException {
-        Constructor<T> ctor = (Constructor<T>) getConstructor(rs, clazz);
-        rs.next();
-        Object[] objs = convertToObjects(rs, ctor);
+    public <T> T uniqueResult(ResultSet resultSet, Class<T> clazz) throws SQLException {
+        Constructor<T> ctor = (Constructor<T>) getConstructor(resultSet, clazz);
+        resultSet.next();
+        Object[] objs = convertToObjects(resultSet, ctor);
         return createInstance(ctor, objs);
     }
 

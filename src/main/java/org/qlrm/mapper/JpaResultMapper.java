@@ -25,15 +25,15 @@ public class JpaResultMapper extends ResultMapper {
     /**
      * Returns a list of objects from a {@link javax.persistence.Query}
      *
-     * @param q     {@link Query}
+     * @param query {@link Query}
      * @param clazz {@link Class}
      * @param <T>   Type
      * @return List of objects
      */
-    public <T> List<T> list(Query q, Class<T> clazz) {
+    public <T> List<T> list(Query query, Class<T> clazz) {
         List<T> result = new ArrayList<>();
 
-        List<Object[]> list = postProcessResultList(q.getResultList());
+        List<Object[]> list = postProcessResultList(query.getResultList());
 
         Constructor<?> ctor = null;
         if (list != null && !list.isEmpty()) {
@@ -48,13 +48,13 @@ public class JpaResultMapper extends ResultMapper {
     /**
      * Returns on object from {@link javax.persistence.Query}
      *
-     * @param q     {@link Query}
+     * @param query {@link Query}
      * @param clazz {@link Class}
      * @param <T>   Type
      * @return List of objects
      */
-    public <T> T uniqueResult(Query q, Class<T> clazz) {
-        Object[] rec = postProcessSingleResult(q.getSingleResult());
+    public <T> T uniqueResult(Query query, Class<T> clazz) {
+        Object[] rec = postProcessSingleResult(query.getSingleResult());
         Constructor<?> ctor = findConstructor(clazz, rec);
 
         return createInstance(ctor, rec);
@@ -134,8 +134,7 @@ public class JpaResultMapper extends ResultMapper {
      * constructor argument types to their box type counterparts.
      * </p>
      */
-    private Class<?>[] postProcessConstructorParameterTypes(
-            Class<?>[] rawParameterTypes) {
+    private Class<?>[] postProcessConstructorParameterTypes(Class<?>[] rawParameterTypes) {
         Class<?>[] result = new Class<?>[rawParameterTypes.length];
         for (int i = 0; i < rawParameterTypes.length; i++) {
             Class<?> currentType = rawParameterTypes[i];
@@ -147,8 +146,7 @@ public class JpaResultMapper extends ResultMapper {
 
     /**
      * @return The box type matching the provided primitive type or
-     * <code>primitiveType</code> if no match could be found (e. g. the provided
-     * value was not a primitive type).
+     * <code>primitiveType</code> if no match could be found (e.g. the provided value was not a primitive type).
      */
     private Class<?> convertToBoxTypeIfPrimitive(Class<?> primitiveType) {
         return PRIMITIVE_TO_BOX_TYPE_MAP.getOrDefault(primitiveType, primitiveType);
