@@ -15,7 +15,7 @@ QLRM is available in Maven Central
 <dependency>
     <groupId>org.qlrm</groupId>
     <artifactId>qlrm</artifactId>
-    <version>2.1.0</version>
+    <version>3.0.1/version>
 </dependency>
 ```
 
