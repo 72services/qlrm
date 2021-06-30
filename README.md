@@ -103,6 +103,9 @@ classGenerator.generateFromTables("src/test/java/", "ch.simas.sqlresultmapper.to
 
 ## Release Notes
 
+### QLRM 3.0.1
+- New method on JdbcQueryExecutor to execute a SQL string. Thank you Severin! https://github.com/72services/qlrm/pull/17
+
 ### QLRM 2.1.0
 - JpaQueryExecutor now supports paging 
 
