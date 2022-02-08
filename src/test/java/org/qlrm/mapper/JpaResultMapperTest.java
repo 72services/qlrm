@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.qlrm.model.Employee;
 import org.qlrm.test.JpaBaseTest;
 import org.qlrm.to.EmployeeTO;
+import org.qlrm.to.SingleColumnTO;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -25,6 +26,32 @@ public class JpaResultMapperTest extends JpaBaseTest {
 
         Assert.assertNotNull(list);
         for (EmployeeTO rec : list) {
+            LOGGER.debug(rec);
+        }
+    }
+
+    @Test
+    public void listWithSqlOnlyOneColumn() {
+        Query q = em.createNativeQuery("SELECT NAME FROM EMPLOYEE");
+        List<SingleColumnTO> list = jpaResultMapper.list(q, SingleColumnTO.class);
+
+        Assert.assertNotNull(list);
+        for (SingleColumnTO rec : list) {
+            LOGGER.debug(rec);
+        }
+    }
+
+    @Test
+    public void listWithSqlOnlyOneColumnMultipleRows() {
+        Employee secondEmployee = new Employee();
+        secondEmployee.setName("Sarah Meier");
+        storeEmployee(secondEmployee);
+
+        Query q = em.createNativeQuery("SELECT NAME FROM EMPLOYEE");
+        List<SingleColumnTO> list = jpaResultMapper.list(q, SingleColumnTO.class);
+
+        Assert.assertNotNull(list);
+        for (SingleColumnTO rec : list) {
             LOGGER.debug(rec);
         }
     }
@@ -115,7 +142,7 @@ public class JpaResultMapperTest extends JpaBaseTest {
 
         Assert.assertNotNull(result);
         Assert.assertEquals(1, result.size());
-        Assert.assertEquals(emplyoeeName, result.get(0));
+        Assert.assertEquals(employeeName, result.get(0));
     }
 
     @Test
