@@ -33,14 +33,25 @@ public class JpaResultMapper extends ResultMapper {
     public <T> List<T> list(Query query, Class<T> clazz) {
         List<T> result = new ArrayList<>();
 
-        List<Object[]> list = postProcessResultList(query.getResultList());
+        List<?> list = postProcessResultList(query.getResultList());
 
-        Constructor<?> ctor = null;
         if (list != null && !list.isEmpty()) {
-            ctor = findConstructor(clazz, list.get(0));
-        }
-        for (Object[] obj : Objects.requireNonNull(list)) {
-            result.add(createInstance(ctor, obj));
+            Object objects = list.get(0);
+            Constructor<?> ctor;
+            if (objects instanceof Object[]) {
+                ctor = findConstructor(clazz, (Object[]) objects);
+
+                List<Object[]> objectArrays = (List<Object[]>) Objects.requireNonNull(list);
+                for (Object[] obj : objectArrays) {
+                    result.add(createInstance(ctor, obj));
+                }
+            } else {
+                ctor = findConstructor(clazz, objects);
+
+                for (Object obj : Objects.requireNonNull(list)) {
+                    result.add(createInstance(ctor, new Object[]{obj}));
+                }
+            }
         }
         return result;
     }

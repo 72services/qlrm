@@ -10,7 +10,7 @@ public abstract class JpaBaseTest {
     protected EntityManager em;
 
     protected int employeeId;
-    protected String emplyoeeName;
+    protected String employeeName;
 
     @Before
     public void init() {
@@ -21,7 +21,7 @@ public abstract class JpaBaseTest {
         employee.setName("Peter Muster");
         storeEmployee(employee);
         employeeId = employee.getId();
-        emplyoeeName = employee.getName();
+        employeeName = employee.getName();
     }
 
     protected void storeEmployee(Employee employee) {
