@@ -4,7 +4,7 @@
 
     <groupId>org.qlrm</groupId>
     <artifactId>qlrm</artifactId>
-    <version>4.0.1</version>
+    <version>4.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>QLRM</name>
