@@ -1,48 +1,53 @@
 package org.qlrm.mapper;
 
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.Query;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.qlrm.model.Employee;
 import org.qlrm.test.JpaBaseTest;
 import org.qlrm.to.EmployeeTO;
 import org.qlrm.to.SingleColumnTO;
 
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
 import java.util.List;
 
-public class JpaResultMapperTest extends JpaBaseTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+class JpaResultMapperTest extends JpaBaseTest {
 
     private static final Logger LOGGER = LogManager.getLogger(JpaResultMapperTest.class);
 
     private final JpaResultMapper jpaResultMapper = new JpaResultMapper();
 
     @Test
-    public void listWithSql() {
+    void listWithSql() {
         Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE");
         List<EmployeeTO> list = jpaResultMapper.list(q, EmployeeTO.class);
 
-        Assert.assertNotNull(list);
+        assertNotNull(list);
         for (EmployeeTO rec : list) {
             LOGGER.debug(rec);
         }
     }
 
     @Test
-    public void listWithSqlOnlyOneColumn() {
+    void listWithSqlOnlyOneColumn() {
         Query q = em.createNativeQuery("SELECT NAME FROM EMPLOYEE");
         List<SingleColumnTO> list = jpaResultMapper.list(q, SingleColumnTO.class);
 
-        Assert.assertNotNull(list);
+        assertNotNull(list);
         for (SingleColumnTO rec : list) {
             LOGGER.debug(rec);
         }
     }
 
     @Test
-    public void listWithSqlOnlyOneColumnMultipleRows() {
+    void listWithSqlOnlyOneColumnMultipleRows() {
         Employee secondEmployee = new Employee();
         secondEmployee.setName("Sarah Meier");
         storeEmployee(secondEmployee);
@@ -50,81 +55,80 @@ public class JpaResultMapperTest extends JpaBaseTest {
         Query q = em.createNativeQuery("SELECT NAME FROM EMPLOYEE");
         List<SingleColumnTO> list = jpaResultMapper.list(q, SingleColumnTO.class);
 
-        Assert.assertNotNull(list);
+        assertNotNull(list);
         for (SingleColumnTO rec : list) {
             LOGGER.debug(rec);
         }
     }
 
     @Test
-    public void listWithJpql() {
+    void listWithJpql() {
         Query q = em.createQuery("SELECT e.id, e.name FROM Employee e");
         List<EmployeeTO> list = jpaResultMapper.list(q, EmployeeTO.class);
 
-        Assert.assertNotNull(list);
+        assertNotNull(list);
         for (EmployeeTO rec : list) {
             LOGGER.debug(rec);
         }
     }
 
     @Test
-    public void listWithJpqlWhenUniqueResult() {
+    void listWithJpqlWhenUniqueResult() {
         Query q = em.createQuery("SELECT e.id FROM Employee e");
         List<Integer> list = jpaResultMapper.list(q, Integer.class);
 
-        Assert.assertNotNull(list);
-        Assert.assertEquals(1, list.size());
-        Assert.assertEquals(employeeId, list.get(0).intValue());
+        assertNotNull(list);
+        assertEquals(1, list.size());
+        assertEquals(employeeId, list.get(0).intValue());
     }
 
     @Test
-    public void listWithJpqlWithNoResult() {
+    void listWithJpqlWithNoResult() {
         Query q = em.createQuery("SELECT e FROM Employee e WHERE e.id=?1");
         q.setParameter(1, employeeId + 1);
 
         List<Long> list = jpaResultMapper.list(q, Long.class);
 
-        Assert.assertNotNull(list);
-        Assert.assertTrue(list.isEmpty());
+        assertNotNull(list);
+        assertTrue(list.isEmpty());
     }
 
     @Test
-    public void uniqueResultWithSql() {
+    void uniqueResultWithSql() {
         Query q = em.createNativeQuery("SELECT ID, NAME FROM EMPLOYEE WHERE ID = ?");
         q.setParameter(1, employeeId);
 
         EmployeeTO to = jpaResultMapper.uniqueResult(q, EmployeeTO.class);
 
-        Assert.assertNotNull(to);
+        assertNotNull(to);
         LOGGER.debug(to);
     }
 
     @Test
-    public void uniqueResultWithJpqlWhenSingleRow() {
+    void uniqueResultWithJpqlWhenSingleRow() {
         Query q = em.createNativeQuery("SELECT e.id, e.name FROM Employee e WHERE e.id = ?");
         q.setParameter(1, employeeId);
         EmployeeTO to = jpaResultMapper.uniqueResult(q, EmployeeTO.class);
 
-        Assert.assertNotNull(to);
+        assertNotNull(to);
         LOGGER.debug(to);
     }
 
     @Test
-    public void uniqueResultWithJpqlWhenSingleResult() {
+    void uniqueResultWithJpqlWhenSingleResult() {
         Query q = em.createQuery("SELECT COUNT(e) FROM Employee e");
         Long result = jpaResultMapper.uniqueResult(q, Long.class);
 
-        Assert.assertNotNull(result);
-        Assert.assertEquals(1, result.longValue());
+        assertNotNull(result);
+        assertEquals(1, result.longValue());
     }
 
-    @Test(expected = NoResultException.class)
-    public void uniqueResultWithJpqlWhenNoResult() {
+    @Test
+    void uniqueResultWithJpqlWhenNoResult() {
         Query q = em.createQuery("SELECT e FROM Employee e WHERE e.id = ?1");
         q.setParameter(1, employeeId + 1);
 
-        jpaResultMapper.uniqueResult(q, Long.class);
-        Assert.fail("Expected " + NoResultException.class.getSimpleName() + " but no exception was thrown.");
+        assertThrows(NoResultException.class, () -> jpaResultMapper.uniqueResult(q, Long.class));
     }
 
     /**
@@ -134,19 +138,19 @@ public class JpaResultMapperTest extends JpaBaseTest {
      * argument count did match the result row column count.
      */
     @Test
-    public void testWhenTargetTypeHasMultipleConstructorsWithSameArgumentCount() {
+    void testWhenTargetTypeHasMultipleConstructorsWithSameArgumentCount() {
         Query q = em.createQuery("SELECT e.name FROM Employee e WHERE e.id = ?1");
         q.setParameter(1, employeeId);
 
         List<String> result = jpaResultMapper.list(q, String.class);
 
-        Assert.assertNotNull(result);
-        Assert.assertEquals(1, result.size());
-        Assert.assertEquals(employeeName, result.get(0));
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(employeeName, result.get(0));
     }
 
     @Test
-    public void testNullResultColumnRaisesNPE() {
+    void testNullResultColumnRaisesNPE() {
         Employee employeeWithNoName = new Employee();
         storeEmployee(employeeWithNoName);
         Query q = em.createQuery("SELECT e.name FROM Employee e WHERE e.id = ?1");
@@ -154,9 +158,9 @@ public class JpaResultMapperTest extends JpaBaseTest {
 
         try {
             jpaResultMapper.list(q, String.class);
-            Assert.fail("Expected exception has not been thrown.");
+            fail("Expected exception has not been thrown.");
         } catch (RuntimeException e) {
-            Assert.assertEquals(NullPointerException.class, e.getCause().getClass());
+            assertEquals(NullPointerException.class, e.getCause().getClass());
         }
     }
 

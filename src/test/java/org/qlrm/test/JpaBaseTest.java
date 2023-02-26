@@ -1,9 +1,12 @@
 package org.qlrm.test;
 
-import org.junit.Before;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.Query;
+import org.junit.jupiter.api.BeforeEach;
 import org.qlrm.model.Employee;
-
-import javax.persistence.*;
 
 public abstract class JpaBaseTest {
 
@@ -12,8 +15,8 @@ public abstract class JpaBaseTest {
     protected int employeeId;
     protected String employeeName;
 
-    @Before
-    public void init() {
+    @BeforeEach
+    void init() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("test-pu");
         em = emf.createEntityManager();
         removeAllEmployees();

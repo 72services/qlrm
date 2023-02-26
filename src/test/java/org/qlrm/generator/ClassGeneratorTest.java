@@ -2,21 +2,21 @@ package org.qlrm.generator;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.sql.*;
 
-public class ClassGeneratorTest {
+class ClassGeneratorTest {
 
     private static final Logger LOGGER = LogManager.getLogger(ClassGeneratorTest.class);
 
     private static Connection con;
     private static final ClassGenerator classGenerator = new ClassGenerator();
 
-    @BeforeClass
-    public static void setUpClass() {
+    @BeforeAll
+    static void setUpClass() {
         try {
             Class.forName("org.h2.Driver");
             con = DriverManager.getConnection("jdbc:h2:mem:test", "sa", "");
@@ -31,7 +31,7 @@ public class ClassGeneratorTest {
     // This test tests the deprecated method itself. Warning is not necessary.
     @SuppressWarnings("deprecation")
     @Test
-    public void generateFromTables() {
+    void generateFromTables() {
         try {
             classGenerator.generateFromTables(System.getProperty("user.dir"), null, null, false, con, "EMPLOYEE");
         } catch (SQLException | FileNotFoundException e) {
@@ -40,7 +40,7 @@ public class ClassGeneratorTest {
     }
 
     @Test
-    public void generateFromResultSet() {
+    void generateFromResultSet() {
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT NAME FROM EMPLOYEE");
