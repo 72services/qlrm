@@ -134,7 +134,7 @@ class JpaResultMapperTest extends JpaBaseTest {
     /**
      * Tests if the constructor search algorithm returns the correct
      * constructor. There has been a bug where the algorithm just returned the
-     * first constructor (if multiple constructors where available) who's
+     * first constructor (if multiple constructors where available) whose
      * argument count did match the result row column count.
      */
     @Test
