@@ -2,15 +2,17 @@ package org.qlrm.executor;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.qlrm.test.JpaBaseTest;
 import org.qlrm.to.EmployeeTO;
 import org.qlrm.to.SingleColumnTO;
 
 import java.util.List;
 
-public class JpaQueryExecutorTest extends JpaBaseTest {
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+class JpaQueryExecutorTest extends JpaBaseTest {
 
     private static final Logger LOGGER = LogManager.getLogger(JpaQueryExecutorTest.class);
 
@@ -20,7 +22,7 @@ public class JpaQueryExecutorTest extends JpaBaseTest {
 
         List<EmployeeTO> list = queryExecutor.executeSelect(em, EmployeeTO.class, "select.sql");
 
-        Assert.assertNotNull(list);
+        assertNotNull(list);
         for (EmployeeTO rec : list) {
             LOGGER.debug(rec);
         }
@@ -32,7 +34,7 @@ public class JpaQueryExecutorTest extends JpaBaseTest {
 
         List<EmployeeTO> list = queryExecutor.executeSelect(em, EmployeeTO.class, "select.sql", new PageRequest(0, 20));
 
-        Assert.assertNotNull(list);
+        assertNotNull(list);
         for (EmployeeTO rec : list) {
             LOGGER.debug(rec);
         }
@@ -44,31 +46,31 @@ public class JpaQueryExecutorTest extends JpaBaseTest {
 
         List<EmployeeTO> list = queryExecutor.executeSelect(em, EmployeeTO.class, "select_with_one_param.sql", 1);
 
-        Assert.assertNotNull(list);
+        assertNotNull(list);
         for (EmployeeTO rec : list) {
             LOGGER.debug(rec);
         }
     }
 
     @Test
-    public void selectWithTwoParams() {
+    void selectWithTwoParams() {
         JpaQueryExecutor queryExecutor = new JpaQueryExecutor();
 
         List<EmployeeTO> list = queryExecutor.executeSelect(em, EmployeeTO.class, "select_with_two_params.sql", 1, "Peter Muster");
 
-        Assert.assertNotNull(list);
+        assertNotNull(list);
         for (EmployeeTO rec : list) {
             LOGGER.debug(rec);
         }
     }
 
     @Test
-    public void selectOnlyOneColumn() {
+    void selectOnlyOneColumn() {
         JpaQueryExecutor queryExecutor = new JpaQueryExecutor();
 
         List<SingleColumnTO> list = queryExecutor.executeSelect(em, SingleColumnTO.class, "select_with_one_column.sql");
 
-        Assert.assertFalse(list.isEmpty());
+        assertFalse(list.isEmpty());
         for (SingleColumnTO rec : list) {
             LOGGER.debug(rec);
         }

@@ -1,6 +1,7 @@
 package org.qlrm.mapper;
 
-import javax.persistence.Query;
+import jakarta.persistence.Query;
+
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +24,7 @@ public class JpaResultMapper extends ResultMapper {
     }
 
     /**
-     * Returns a list of objects from a {@link javax.persistence.Query}
+     * Returns a list of objects from a {@link Query}
      *
      * @param query {@link Query}
      * @param clazz {@link Class}
@@ -57,7 +58,7 @@ public class JpaResultMapper extends ResultMapper {
     }
 
     /**
-     * Returns on object from {@link javax.persistence.Query}
+     * Returns on object from {@link Query}
      *
      * @param query {@link Query}
      * @param clazz {@link Class}

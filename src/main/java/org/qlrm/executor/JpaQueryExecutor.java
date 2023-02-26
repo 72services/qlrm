@@ -1,9 +1,9 @@
 package org.qlrm.executor;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import org.qlrm.mapper.JpaResultMapper;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.util.List;
 
 public class JpaQueryExecutor {
@@ -11,9 +11,9 @@ public class JpaQueryExecutor {
     private final JpaResultMapper jpaResultMapper = new JpaResultMapper();
 
     /**
-     * Executes an SQL select from a file an returns objects of the requested class
+     * Executes an SQL select from a file and returns objects of the requested class
      *
-     * @param em          {@link javax.persistence.EntityManager}
+     * @param em          {@link EntityManager}
      * @param clazz       Type to return
      * @param filename    File containing the SQL select
      * @param pageRequest {@link PageRequest}
@@ -40,9 +40,9 @@ public class JpaQueryExecutor {
     }
 
     /**
-     * Executes an SQL select from a file an returns objects of the requested class
+     * Executes an SQL select from a file and returns objects of the requested class
      *
-     * @param em       {@link javax.persistence.EntityManager}
+     * @param em       {@link EntityManager}
      * @param clazz    Type to return
      * @param filename File containing the SQL select
      * @param params   List of parameters

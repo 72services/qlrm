@@ -1,6 +1,6 @@
 package org.qlrm.test;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,8 +11,8 @@ public abstract class JdbcBaseTest {
 
     protected static Connection con;
 
-    @BeforeClass
-    public static void init() throws SQLException, ClassNotFoundException {
+    @BeforeAll
+    static void init() throws SQLException, ClassNotFoundException {
         Class.forName("org.h2.Driver");
         con = DriverManager.getConnection("jdbc:h2:mem:test", "sa", "");
         Statement stmt = con.createStatement();

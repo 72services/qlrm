@@ -9,13 +9,15 @@ Read more: https://github.com/simasch/qlrm/blob/master/ConstructorResult.md
 ## Maven Dependency
 QLRM is available in Maven Central
 
-**Important Notice:** The groupId has changed from ```ch.simas.qlrm``` to ```org.qlrm```
+**Important Notices** 
+1. The groupId has changed from ```ch.simas.qlrm``` to ```org.qlrm```
+2. QLRM from version 4.x.x require Jakarta Persistence 
 
 ```xml
 <dependency>
     <groupId>org.qlrm</groupId>
     <artifactId>qlrm</artifactId>
-    <version>3.0.1/version>
+    <version>4.0.1</version>
 </dependency>
 ```
 
@@ -93,7 +95,7 @@ ClassGenerator is a simple utility to generate transfer objects from database ta
 ## Usage
 The first parameter is the path where the source file should be generated to. The second is the package name, third a suffix.
 With the forth parameter you can define if the fields should be public or if the generator must generate getters. 
-Then a database connection must be passed. And the last parameter is a vargargs where you can passe one or multiple table names.
+Then a database connection must be passed. And the last parameter is a vargargs where you can pass one or multiple table names.
 
 ```java
 ClassGenerator classGenerator = new ClassGenerator();
