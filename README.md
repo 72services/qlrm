@@ -9,13 +9,15 @@ Read more: https://github.com/simasch/qlrm/blob/master/ConstructorResult.md
 ## Maven Dependency
 QLRM is available in Maven Central
 
-**Important Notice:** The groupId has changed from ```ch.simas.qlrm``` to ```org.qlrm```
+**Important Notices** 
+1. The groupId has changed from ```ch.simas.qlrm``` to ```org.qlrm```
+2. QLRM from version 4.x.x require Jakarta Persistence 
 
 ```xml
 <dependency>
     <groupId>org.qlrm</groupId>
     <artifactId>qlrm</artifactId>
-    <version>3.0.4/version>
+    <version>4.0.1</version>
 </dependency>
 ```
 
