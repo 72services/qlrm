@@ -1,21 +1,20 @@
 package org.qlrm.mapper;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.qlrm.test.JdbcBaseTest;
 import org.qlrm.to.EmployeeTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class JdbcResultMapperTest extends JdbcBaseTest {
 
-    private static final Logger LOGGER = LogManager.getLogger(JdbcResultMapperTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JdbcResultMapperTest.class);
 
     private static final JdbcResultMapper jdbcResultMapper = new JdbcResultMapper();
 
@@ -27,11 +26,9 @@ class JdbcResultMapperTest extends JdbcBaseTest {
 
         List<EmployeeTO> list = jdbcResultMapper.list(stmt.getResultSet(), EmployeeTO.class);
         assertNotNull(list);
-        assertTrue(list.size() > 0);
+        assertFalse(list.isEmpty());
 
-        for (EmployeeTO rec : list) {
-            LOGGER.debug(rec);
-        }
+        LOGGER.debug(list.toString());
     }
 
     @Test
@@ -43,6 +40,6 @@ class JdbcResultMapperTest extends JdbcBaseTest {
         EmployeeTO to = jdbcResultMapper.uniqueResult(stmt.getResultSet(), EmployeeTO.class);
         assertNotNull(to);
 
-        LOGGER.debug(to);
+        LOGGER.debug(to.toString());
     }
 }

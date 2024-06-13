@@ -28,7 +28,7 @@ public class JdbcQueryExecutor {
     }
 
     /**
-     * Executes an SQL select  and returns objects of the requested class
+     * Executes an SQL select and returns objects of the requested class
      *
      * @param connection {@link java.sql.Connection}
      * @param clazz      Type to return

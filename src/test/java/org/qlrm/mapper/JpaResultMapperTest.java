@@ -2,13 +2,13 @@ package org.qlrm.mapper;
 
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.qlrm.model.Employee;
 import org.qlrm.test.JpaBaseTest;
 import org.qlrm.to.EmployeeTO;
 import org.qlrm.to.SingleColumnTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 class JpaResultMapperTest extends JpaBaseTest {
 
-    private static final Logger LOGGER = LogManager.getLogger(JpaResultMapperTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JpaResultMapperTest.class);
 
     private final JpaResultMapper jpaResultMapper = new JpaResultMapper();
 
@@ -30,9 +30,8 @@ class JpaResultMapperTest extends JpaBaseTest {
         List<EmployeeTO> list = jpaResultMapper.list(q, EmployeeTO.class);
 
         assertNotNull(list);
-        for (EmployeeTO rec : list) {
-            LOGGER.debug(rec);
-        }
+
+        LOGGER.debug(list.toString());
     }
 
     @Test
@@ -41,9 +40,8 @@ class JpaResultMapperTest extends JpaBaseTest {
         List<SingleColumnTO> list = jpaResultMapper.list(q, SingleColumnTO.class);
 
         assertNotNull(list);
-        for (SingleColumnTO rec : list) {
-            LOGGER.debug(rec);
-        }
+
+        LOGGER.debug(list.toString());
     }
 
     @Test
@@ -56,9 +54,8 @@ class JpaResultMapperTest extends JpaBaseTest {
         List<SingleColumnTO> list = jpaResultMapper.list(q, SingleColumnTO.class);
 
         assertNotNull(list);
-        for (SingleColumnTO rec : list) {
-            LOGGER.debug(rec);
-        }
+
+        LOGGER.debug(list.toString());
     }
 
     @Test
@@ -67,9 +64,8 @@ class JpaResultMapperTest extends JpaBaseTest {
         List<EmployeeTO> list = jpaResultMapper.list(q, EmployeeTO.class);
 
         assertNotNull(list);
-        for (EmployeeTO rec : list) {
-            LOGGER.debug(rec);
-        }
+
+        LOGGER.debug(list.toString());
     }
 
     @Test
@@ -101,7 +97,8 @@ class JpaResultMapperTest extends JpaBaseTest {
         EmployeeTO to = jpaResultMapper.uniqueResult(q, EmployeeTO.class);
 
         assertNotNull(to);
-        LOGGER.debug(to);
+
+        LOGGER.debug(to.toString());
     }
 
     @Test
@@ -111,7 +108,8 @@ class JpaResultMapperTest extends JpaBaseTest {
         EmployeeTO to = jpaResultMapper.uniqueResult(q, EmployeeTO.class);
 
         assertNotNull(to);
-        LOGGER.debug(to);
+
+        LOGGER.debug(to.toString());
     }
 
     @Test

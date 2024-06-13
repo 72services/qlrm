@@ -1,11 +1,11 @@
 package org.qlrm.executor;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.qlrm.test.JpaBaseTest;
 import org.qlrm.to.EmployeeTO;
 import org.qlrm.to.SingleColumnTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class JpaQueryExecutorTest extends JpaBaseTest {
 
-    private static final Logger LOGGER = LogManager.getLogger(JpaQueryExecutorTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JpaQueryExecutorTest.class);
 
     @Test
     public void select() {
@@ -23,9 +23,8 @@ class JpaQueryExecutorTest extends JpaBaseTest {
         List<EmployeeTO> list = queryExecutor.executeSelect(em, EmployeeTO.class, "select.sql");
 
         assertNotNull(list);
-        for (EmployeeTO rec : list) {
-            LOGGER.debug(rec);
-        }
+
+        LOGGER.debug(list.toString());
     }
 
     @Test
@@ -35,9 +34,8 @@ class JpaQueryExecutorTest extends JpaBaseTest {
         List<EmployeeTO> list = queryExecutor.executeSelect(em, EmployeeTO.class, "select.sql", new PageRequest(0, 20));
 
         assertNotNull(list);
-        for (EmployeeTO rec : list) {
-            LOGGER.debug(rec);
-        }
+
+        LOGGER.debug(list.toString());
     }
 
     @Test
@@ -47,9 +45,8 @@ class JpaQueryExecutorTest extends JpaBaseTest {
         List<EmployeeTO> list = queryExecutor.executeSelect(em, EmployeeTO.class, "select_with_one_param.sql", 1);
 
         assertNotNull(list);
-        for (EmployeeTO rec : list) {
-            LOGGER.debug(rec);
-        }
+
+        LOGGER.debug(list.toString());
     }
 
     @Test
@@ -59,9 +56,8 @@ class JpaQueryExecutorTest extends JpaBaseTest {
         List<EmployeeTO> list = queryExecutor.executeSelect(em, EmployeeTO.class, "select_with_two_params.sql", 1, "Peter Muster");
 
         assertNotNull(list);
-        for (EmployeeTO rec : list) {
-            LOGGER.debug(rec);
-        }
+
+        LOGGER.debug(list.toString());
     }
 
     @Test
@@ -71,8 +67,7 @@ class JpaQueryExecutorTest extends JpaBaseTest {
         List<SingleColumnTO> list = queryExecutor.executeSelect(em, SingleColumnTO.class, "select_with_one_column.sql");
 
         assertFalse(list.isEmpty());
-        for (SingleColumnTO rec : list) {
-            LOGGER.debug(rec);
-        }
+
+        LOGGER.debug(list.toString());
     }
 }

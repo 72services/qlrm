@@ -1,16 +1,16 @@
 package org.qlrm.generator;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.sql.*;
 
 class ClassGeneratorTest {
 
-    private static final Logger LOGGER = LogManager.getLogger(ClassGeneratorTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClassGeneratorTest.class);
 
     private static Connection con;
     private static final ClassGenerator classGenerator = new ClassGenerator();

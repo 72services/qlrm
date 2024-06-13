@@ -134,64 +134,24 @@ public class ClassGenerator {
     }
 
     private String sqlTypeToJavaTypeString(int dataType) {
-        String typeString;
-        switch (dataType) {
-            case Types.TINYINT:
-                typeString = "byte";
-                break;
-            case Types.BIGINT:
-                typeString = "BigInteger";
-                break;
-            case Types.INTEGER:
-                typeString = "Integer";
-                break;
-            case Types.SMALLINT:
-                typeString = "Short";
-                break;
-            case Types.CHAR:
-                typeString = "Character";
-                break;
-            case Types.VARCHAR:
-            case Types.NVARCHAR:
-            case Types.LONGVARCHAR:
-                typeString = "String";
-                break;
-            case Types.DOUBLE:
-            case Types.FLOAT:
-                typeString = "Double";
-                break;
-            case Types.REAL:
-                typeString = "Float";
-                break;
-            case Types.NUMERIC:
-            case Types.DECIMAL:
-                typeString = "BigDecimal";
-                break;
-            case Types.DATE:
-                typeString = "Date";
-                break;
-            case Types.BIT:
-                typeString = "boolean";
-                break;
-            case Types.TIMESTAMP:
-                typeString = "Timestamp";
-                break;
-            case Types.TIME:
-                typeString = "Time";
-                break;
-            case Types.BLOB:
-                typeString = "Blob";
-                break;
-            case Types.BINARY:
-            case Types.VARBINARY:
-            case Types.LONGVARBINARY:
-                typeString = "byte[]";
-                break;
-            default:
-                typeString = "Object";
-                break;
-        }
-        return typeString;
+        return switch (dataType) {
+            case Types.TINYINT -> "byte";
+            case Types.BIGINT -> "BigInteger";
+            case Types.INTEGER -> "Integer";
+            case Types.SMALLINT -> "Short";
+            case Types.CHAR -> "Character";
+            case Types.VARCHAR, Types.NVARCHAR, Types.LONGVARCHAR -> "String";
+            case Types.DOUBLE, Types.FLOAT -> "Double";
+            case Types.REAL -> "Float";
+            case Types.NUMERIC, Types.DECIMAL -> "BigDecimal";
+            case Types.DATE -> "Date";
+            case Types.BIT -> "boolean";
+            case Types.TIMESTAMP -> "Timestamp";
+            case Types.TIME -> "Time";
+            case Types.BLOB -> "Blob";
+            case Types.BINARY, Types.VARBINARY, Types.LONGVARBINARY -> "byte[]";
+            default -> "Object";
+        };
     }
 
     private String generateClassName(String table, String suffix) {

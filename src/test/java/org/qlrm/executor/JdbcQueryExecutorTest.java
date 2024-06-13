@@ -1,20 +1,18 @@
 package org.qlrm.executor;
 
-import java.util.List;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.qlrm.test.JdbcBaseTest;
 import org.qlrm.to.EmployeeTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class JdbcQueryExecutorTest extends JdbcBaseTest {
 
-    private static final Logger LOGGER = LogManager.getLogger(JdbcQueryExecutorTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JdbcQueryExecutorTest.class);
 
     @Test
     void select() {
@@ -23,11 +21,9 @@ class JdbcQueryExecutorTest extends JdbcBaseTest {
         List<EmployeeTO> list = queryExecutor.executeSelect(con, EmployeeTO.class, "select.sql");
 
         assertNotNull(list);
-        assertTrue(list.size() > 0);
+        assertTrue(!list.isEmpty());
 
-        for (EmployeeTO rec : list) {
-            LOGGER.debug(rec);
-        }
+        LOGGER.debug(list.toString());
     }
 
     @Test
@@ -37,11 +33,9 @@ class JdbcQueryExecutorTest extends JdbcBaseTest {
         List<EmployeeTO> list = queryExecutor.executeSelect(con, "SELECT ID, NAME FROM EMPLOYEE", EmployeeTO.class);
 
         assertNotNull(list);
-        assertTrue(list.size() > 0);
+        assertFalse(list.isEmpty());
 
-        for (EmployeeTO rec : list) {
-            LOGGER.debug(rec);
-        }
+        LOGGER.debug(list.toString());
     }
 
     @Test
@@ -51,11 +45,9 @@ class JdbcQueryExecutorTest extends JdbcBaseTest {
         List<EmployeeTO> list = queryExecutor.executeSelect(con, EmployeeTO.class, "select_with_one_param.sql", 1);
 
         assertNotNull(list);
-        assertTrue(list.size() > 0);
+        assertFalse(list.isEmpty());
 
-        for (EmployeeTO rec : list) {
-            LOGGER.debug(rec);
-        }
+        LOGGER.debug(list.toString());
     }
 
     @Test
@@ -65,11 +57,9 @@ class JdbcQueryExecutorTest extends JdbcBaseTest {
         List<EmployeeTO> list = queryExecutor.executeSelect(con, EmployeeTO.class, "select_with_two_params.sql", 1, "Peter Muster");
 
         assertNotNull(list);
-        assertTrue(list.size() > 0);
+        assertFalse(list.isEmpty());
 
-        for (EmployeeTO rec : list) {
-            LOGGER.debug(rec);
-        }
+        LOGGER.debug(list.toString());
     }
 
     @Test
