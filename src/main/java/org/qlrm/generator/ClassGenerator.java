@@ -5,7 +5,7 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.sql.*;
 
-public class ClassGenerator {
+public class ClassGenerator extends AbstractGenerator {
 
     @Deprecated
     public void generateFromTables(final String path,
@@ -72,7 +72,8 @@ public class ClassGenerator {
 
     private void createClassHeader(PrintWriter outputStream, String packageName, String className) {
         if (packageName != null) {
-            outputStream.println("package " + packageName + ";\n");
+            outputStream.println("package " + packageName + ";");
+            outputStream.println("");
         }
 
         outputStream.println("import java.io.Serializable;");
@@ -82,11 +83,11 @@ public class ClassGenerator {
         outputStream.println("import java.math.BigDecimal;");
         outputStream.println("import java.math.BigInteger;");
         outputStream.println("import java.sql.Blob;");
-        outputStream.println("\n");
-        outputStream.println("public class " + className + " implements Serializable {\n");
-
-        outputStream.println("\n");
+        outputStream.println("");
+        outputStream.println("public class " + className + " implements Serializable {");
+        outputStream.println("");
         outputStream.println("  private static final long serialVersionUID = 1L;");
+        outputStream.println("");
     }
 
     private String createFileName(String path, String pkg, String className) {
@@ -133,27 +134,6 @@ public class ClassGenerator {
         writeCtrAndGetters(outputStream, className, ctrArgs, ctrBody, getters);
     }
 
-    private String sqlTypeToJavaTypeString(int dataType) {
-        return switch (dataType) {
-            case Types.TINYINT -> "byte";
-            case Types.BIGINT -> "BigInteger";
-            case Types.INTEGER -> "Integer";
-            case Types.SMALLINT -> "Short";
-            case Types.CHAR -> "Character";
-            case Types.VARCHAR, Types.NVARCHAR, Types.LONGVARCHAR -> "String";
-            case Types.DOUBLE, Types.FLOAT -> "Double";
-            case Types.REAL -> "Float";
-            case Types.NUMERIC, Types.DECIMAL -> "BigDecimal";
-            case Types.DATE -> "Date";
-            case Types.BIT -> "boolean";
-            case Types.TIMESTAMP -> "Timestamp";
-            case Types.TIME -> "Time";
-            case Types.BLOB -> "Blob";
-            case Types.BINARY, Types.VARBINARY, Types.LONGVARBINARY -> "byte[]";
-            default -> "Object";
-        };
-    }
-
     private String generateClassName(String table, String suffix) {
         if (suffix == null) {
             suffix = "";
@@ -161,26 +141,27 @@ public class ClassGenerator {
         return table.substring(0, 1).toUpperCase() + table.substring(1).toLowerCase() + suffix;
     }
 
-    private void generateCtrAndGetters(int colType, PrintWriter outputStream, boolean publicFields,
+    private void generateCtrAndGetters(int colType, PrintWriter printWriter, boolean publicFields,
                                        String name, StringBuilder constructorArguments, StringBuilder constructorBody,
                                        StringBuilder getters) {
         String type = sqlTypeToJavaTypeString(colType);
-        outputStream.println(publicFields ? "  public " : "  private " + type + " " + name + ";");
+        printWriter.println(publicFields ? "  public " : "  private " + type + " " + name + ";");
         constructorArguments.append(type).append(" ").append(name);
         constructorBody.append("    this.").append(name).append(" = ").append(name).append(";\n");
         if (!publicFields) {
+            getters.append("\n");
             getters.append("  public ").append(type).append(" get").append(name.substring(0, 1).toUpperCase()).append(name.substring(1)).append("() {\n");
             getters.append("    return ").append(name).append(";\n }\n");
         }
     }
 
-    private void writeCtrAndGetters(PrintWriter outputStream, String className, StringBuilder constructorArguments,
+    private void writeCtrAndGetters(PrintWriter printWriter, String className, StringBuilder constructorArguments,
                                     StringBuilder constructorBody, StringBuilder getters) {
-        outputStream.println("\n");
-        outputStream.println("  public " + className + " (" + constructorArguments.toString() + ") {\n");
-        outputStream.println(constructorBody.toString());
-        outputStream.println("  }\n");
-        outputStream.println(getters.toString());
-        outputStream.println("}");
+        printWriter.println("");
+        printWriter.println("  public " + className + " (" + constructorArguments.toString() + ") {");
+        printWriter.println(constructorBody.toString());
+        printWriter.println("  }");
+        printWriter.println(getters.toString());
+        printWriter.println("}");
     }
 }

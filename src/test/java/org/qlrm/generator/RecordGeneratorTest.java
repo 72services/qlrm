@@ -8,12 +8,12 @@ import org.slf4j.LoggerFactory;
 import java.io.FileNotFoundException;
 import java.sql.*;
 
-class ClassGeneratorTest {
+class RecordGeneratorTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClassGeneratorTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RecordGeneratorTest.class);
 
     private static Connection con;
-    private static final ClassGenerator classGenerator = new ClassGenerator();
+    private static final RecordGenerator recordGenerator = new RecordGenerator();
 
     @BeforeAll
     static void setUpClass() {
@@ -33,7 +33,7 @@ class ClassGeneratorTest {
     @Test
     void generateFromTables() {
         try {
-            classGenerator.generateFromTables(System.getProperty("user.dir"), null, null, false, con, "EMPLOYEE");
+            recordGenerator.generateFromTables(System.getProperty("user.dir"), null, null, null, con, "EMPLOYEE");
         } catch (SQLException | FileNotFoundException e) {
             LOGGER.error(e.getMessage(), e);
         }
@@ -44,7 +44,7 @@ class ClassGeneratorTest {
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT NAME FROM EMPLOYEE");
-            classGenerator.generateFromResultSet(System.getProperty("user.dir"), null, "EmployeeWithName", false, rs);
+            recordGenerator.generateFromResultSet(System.getProperty("user.dir"), null, "EmployeeWithName", rs);
             stmt.close();
         } catch (SQLException | FileNotFoundException e) {
             LOGGER.error(e.getMessage(), e);

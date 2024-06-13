@@ -1,9 +1,9 @@
-/sqlresultmapper/target/
 /target/
+
 /EmployeeNameTO.java
-/pom.xml.releaseBackup
-/release.properties
 /Employee.java
+/EmployeeWithName.java
+
 /.settings
 /.classpath
 /.project
